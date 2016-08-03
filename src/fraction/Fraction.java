@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Fraction {
+
 	int numerator;
 	int denominator;
 	
