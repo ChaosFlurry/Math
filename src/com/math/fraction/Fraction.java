@@ -6,6 +6,11 @@ import java.util.List;
 
 import com.math.helpers.MathUtil;
 
+/**
+ * 
+ * @author ChaosFlurry
+ *
+ */
 public class Fraction {
 
 	int numerator;

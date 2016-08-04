@@ -1,7 +1,11 @@
 package com.math.helpers;
 
 import com.math.fraction.Fraction;
-
+/***
+ * 
+ * @author Archiving
+ *
+ */
 public class MathUtil {
 
 	

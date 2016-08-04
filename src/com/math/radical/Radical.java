@@ -2,6 +2,12 @@ package com.math.radical;
 
 import com.math.fraction.Fraction;
 
+/****
+ * 
+ * @author ChaosFlurry
+ *
+ */
+
 public class Radical {
 	int coefficient;
 	int radicand;

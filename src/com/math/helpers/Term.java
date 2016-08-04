@@ -1,6 +1,10 @@
 package com.math.helpers;
 
-//temp
+/**
+ * 
+ * @author Archiving
+ *
+ */
 public class Term {
 
 	
