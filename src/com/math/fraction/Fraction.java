@@ -1,8 +1,10 @@
-package fraction;
+package com.math.fraction;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.math.helpers.MathUtil;
 
 public class Fraction {
 
@@ -12,52 +14,28 @@ public class Fraction {
 	public Fraction(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
-		simplify();
-	}
-	
-	public int getNumerator() {
-		return numerator;
-	}
-	
-	public void setNumerator(int numerator) {
-		this.numerator = numerator;
-		simplify();
-	}
-	
-	public int getDenominator() {
-		return denominator;
-	}
-	
-	public void setDenominator(int denominator) {
-		this.denominator = denominator;
-		simplify();
-	}
-	
-	public double decimalValue() {
-		return (double) getNumerator() / getDenominator();
+		//TODO think of something more efficient i guess, this feels really awkward???
+		//MathUtil.simplify(new Fraction(numerator, denominator));
+		MathUtil.simplify(this);
 	}
 	
 	@Override
 	public String toString() {
-		if (getNumerator() == 0) {
+		/*
+		if (numerator == 0) {
 			return "0";
-		} else if (getDenominator() == 0) {
+		} else if (denominator == 0) {
 			return "undefined";
-		} else if (getDenominator() == 1) {
-			return Integer.toString(getNumerator());
+		} else if (denominator == 1) {
+			return Integer.toString(numerator);
 		} else {
-			return getNumerator() + "/" + getDenominator();
+			return numerator + "/" + denominator;
 		}
-	}
-	
-	public void simplify() {
-		int gcd = gcd(getNumerator(), getDenominator());
-		setNumerator(getNumerator() / gcd);
-		setDenominator(getDenominator() / gcd);
-		if (getDenominator() < 0) {
-			setNumerator(getNumerator() * -1);
-			setDenominator(getDenominator() * -1);
-		}
+		*/
+		
+		//TODO test
+		if(denominator == 1) return Integer.toString(numerator);
+		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
 	
 	public Fraction reciprocal() {
@@ -68,26 +46,26 @@ public class Fraction {
 		Fraction result = new Fraction(
 				getNumerator() + n * getDenominator(),
 				getDenominator());
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
 	public Fraction add(Fraction f) {
-		int gcd = gcd(this.getDenominator(), f.getDenominator());
+		int d = this.getDenominator();
+		int d1 = f.getDenominator();
+		int n = this.getNumerator();
+		int n1 = f.getNumerator();
 		
-		int f1n = this.getNumerator();
-		int f1d = this.getDenominator();
-		int f2n = f.getNumerator();
-		int f2d = f.getDenominator();
+		int gcd = MathUtil.gcd(d, d1);
 		
 		// 1/4 + 1/6 = 1/4 * 3/3 + 1/6 * 2/2
 		// 1/4 + 1/6 = (1 * 3 + 1 * 2) / 6
-		// f1 + f2 = f1n * (f2d / gcd) + f2n * (f1d / gcd) / f1d * (f2d / gcd)
+		// f1 + f2 = n * (d1 / gcd) + n1 * (d / gcd) / d * (d1 / gcd)
 		
 		Fraction result =  new Fraction(
-				f1n * (f2d / gcd) + f2n * (f1d / gcd),
-				f1d * (f2d / gcd));
-		result.simplify();
+				n * (d1 / gcd) + n1 * (d / gcd),
+				d * (d1 / gcd));
+		MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -95,17 +73,17 @@ public class Fraction {
 		Fraction result = new Fraction(
 				getNumerator() - n * getDenominator(),
 				getDenominator());
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
 	public Fraction subtract(Fraction f) {
-		int gcd = gcd(this.getDenominator(), f.getDenominator());
-		
 		int f1n = this.getNumerator();
 		int f1d = this.getDenominator();
 		int f2n = f.getNumerator();
 		int f2d = f.getDenominator();
+		
+		int gcd = MathUtil.gcd(f1d, f2d);
 		
 		// 1/4 - 1/6 = 1/4 * 3/3 - 1/6 * 2/2
 		// 1/4 - 1/6 = (1 * 3 - 1 * 2) / 6
@@ -114,7 +92,7 @@ public class Fraction {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) - f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -122,7 +100,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				getNumerator() * n,
 				getDenominator());
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -138,15 +116,15 @@ public class Fraction {
 		Fraction result = new Fraction(
 				f1n * f2n,
 				f1d * f2d);
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
 	public Fraction divide(int n) {
 		Fraction result = new Fraction(
-				getNumerator(),
-				getDenominator() * n);
-		result.simplify();
+				numerator,
+				denominator * n);
+		MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -163,7 +141,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				f1n * f2d,
 				f1d * f2n);
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -171,43 +149,13 @@ public class Fraction {
 		Fraction result = new Fraction(
 				(int) Math.pow(getNumerator(), power),
 				(int) Math.pow(getDenominator(), power));
-		result.simplify();
+		MathUtil.simplify(result);
 		return result;
 	}
 	
-	/**
-	 * Uses the Euclidean algorithm to determine the greatest common 
-	 * denominator of two numbers.
-	 * 
-	 * @param a	an integer
-	 * @param b	another integer
-	 * @return	the greatest common denominator of a and b
-	 */
-	public static int gcd(int a, int b) {
-		//Euclidean algorithm
-		//gcd(a, b) == gcd(a % b, b)
-		//when a or b == 0, the gcd is the non-zero value
-		//(which is also the sum of a and b)
-		
-		int gcd;
-		if (a == b) {
-			gcd = a;
-		} else {
-			while (a != 0 && b != 0 ) {
-				//temporary variable
-				int t = b;
-				b = a % b;
-				a = t;
-			}
-			gcd = a + b;
-		}
-		return gcd;
-	}
 	
-	public static int lcm(int a, int b) {
-		return a / gcd(a, b) * b;
-	}
 	
+	//TODO WHY??????????????????????????????????? (prob move to MathUtil.java, cause it doesnt seem to be used here)
 	/**
 	 * Tests if a number is prime using the Sieve of Eratosthenes
 	 * @param n	an integer
@@ -237,6 +185,7 @@ public class Fraction {
 		return isPrime;
 	}
 	
+	//TODO WHY??????????????????????????????????? (prob move to MathUtil.java, cause it doesnt seem to be used here)
 	public static List<Integer> divisors(int n) {
 		n = Math.abs(n);
 		List<Integer> divisors = new ArrayList<Integer>();
@@ -258,6 +207,7 @@ public class Fraction {
 		return divisors;
 	}
 	
+	//TODO WHY??????????????????????????????????? (prob move to MathUtil.java, cause it doesnt seem to be used here)
 	public static List<Integer> primeFactors(int n) {
 		n = Math.abs(n);
 		//0 and 1 have no prime factors
@@ -292,5 +242,25 @@ public class Fraction {
 		if (isPrime(n)) primeFactors.add(n);
 		Collections.sort(primeFactors);
 		return primeFactors;
+	}
+	
+	public int getNumerator() {
+		return numerator;
+	}
+	
+	public void setNumerator(int numerator) {
+		this.numerator = numerator;
+	}
+	
+	public int getDenominator() {
+		return denominator;
+	}
+	
+	public void setDenominator(int denominator) {
+		this.denominator = denominator;
+	}
+	
+	public double decimalValue() {
+		return (double) numerator / denominator;
 	}
 }

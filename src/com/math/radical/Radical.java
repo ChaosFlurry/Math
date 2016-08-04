@@ -1,6 +1,6 @@
-package radical;
+package com.math.radical;
 
-import fraction.Fraction;
+import com.math.fraction.Fraction;
 
 public class Radical {
 	int coefficient;
@@ -12,6 +12,7 @@ public class Radical {
 	//i.e. Radical r can be represented as multiple terms as e.g. 2sqrt5 + sqrt3
 	//let there be a list of Integers denoting coefficients, radicands, and degrees for each term
 	
+	//TODO fractional coefficients/radicands?
 	public Radical(int radicand, int degree) {
 		//check if radicand is negative
 		//check if degree is 0
@@ -97,6 +98,7 @@ public class Radical {
 		}
 	}
 	
+	//TODO move to MathUtil
 	public void simplify() {
 		System.out.println("Radicand: " + getRadicand());
 		if (Fraction.isPrime(getRadicand()) == false) {
