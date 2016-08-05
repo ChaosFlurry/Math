@@ -19,9 +19,6 @@ public class Fraction {
 	public Fraction(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
-		//TODO think of something more efficient i guess, this feels really awkward???
-		//MathUtil.simplify(new Fraction(numerator, denominator));
-		MathUtil.simplify(this);
 	}
 	
 	@Override
@@ -38,39 +35,45 @@ public class Fraction {
 		}
 		*/
 		
-		//TODO test
 		if(denominator == 1) return Integer.toString(numerator);
 		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
 	
+	public String toSimplify() {
+		Fraction f = this;
+		Fraction f0 = MathUtil.simplify(f);
+		if(denominator == 1) return Integer.toString(f0.getNumerator());
+		return (numerator == 0) ? "0" : f0.getNumerator() + "/" + f0.getDenominator();
+	}
+	
 	public Fraction reciprocal() {
-		return new Fraction(getDenominator(), getNumerator());
+		return new Fraction(denominator, numerator);
 	}
 	
 	public Fraction add(int n) {
 		Fraction result = new Fraction(
-				getNumerator() + n * getDenominator(),
-				getDenominator());
-		MathUtil.simplify(result);
+				numerator + n * denominator,
+				denominator);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
 	public Fraction add(Fraction f) {
-		int d = this.getDenominator();
-		int d1 = f.getDenominator();
-		int n = this.getNumerator();
-		int n1 = f.getNumerator();
+		int f1d = this.getDenominator();
+		int f2d = f.getDenominator();
+		int f1n = this.getNumerator();
+		int f2n = f.getNumerator();
 		
-		int gcd = MathUtil.gcd(d, d1);
+		int gcd = MathUtil.gcd(f1d, f2d);
 		
 		// 1/4 + 1/6 = 1/4 * 3/3 + 1/6 * 2/2
 		// 1/4 + 1/6 = (1 * 3 + 1 * 2) / 6
 		// f1 + f2 = n * (d1 / gcd) + n1 * (d / gcd) / d * (d1 / gcd)
 		
 		Fraction result =  new Fraction(
-				n * (d1 / gcd) + n1 * (d / gcd),
-				d * (d1 / gcd));
-		MathUtil.simplify(result);
+				f1n * (f2d / gcd) + f2n * (f1d / gcd),
+				f1d * (f2d / gcd));
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -78,7 +81,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				getNumerator() - n * getDenominator(),
 				getDenominator());
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -97,7 +100,7 @@ public class Fraction {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) - f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -105,7 +108,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				getNumerator() * n,
 				getDenominator());
-		MathUtil.simplify(result);
+		result =  MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -121,7 +124,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				f1n * f2n,
 				f1d * f2d);
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -129,7 +132,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				numerator,
 				denominator * n);
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -146,7 +149,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				f1n * f2d,
 				f1d * f2n);
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	
@@ -154,7 +157,7 @@ public class Fraction {
 		Fraction result = new Fraction(
 				(int) Math.pow(getNumerator(), power),
 				(int) Math.pow(getDenominator(), power));
-		MathUtil.simplify(result);
+		result = MathUtil.simplify(result);
 		return result;
 	}
 	

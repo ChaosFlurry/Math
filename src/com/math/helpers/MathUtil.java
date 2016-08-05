@@ -8,7 +8,7 @@ import com.math.fraction.Fraction;
  */
 public class MathUtil {
 
-	
+	/*
 	//TODO make it return a Fraction, and then change a bunch of code inside Fraction.java
 	public static void simplify(Fraction frac) {
 		//WHEN TO ACTUALLY USE GETTERS
@@ -20,8 +20,25 @@ public class MathUtil {
 		if (denominator < 0) {
 			numerator *= -1;
 			denominator *= -1;
-		}
+		}	
 	}
+	*/
+	
+	public static Fraction simplify(Fraction frac) {
+		//WHEN TO ACTUALLY USE GETTERS
+		int numerator = frac.getNumerator();
+		int denominator = frac.getDenominator();
+		int gcd = gcd(numerator, denominator);
+		numerator = (numerator / gcd);
+		denominator = (denominator / gcd);
+		if (denominator < 0) {
+			numerator *= -1;
+			denominator *= -1;
+		}	
+		return new Fraction(numerator, denominator);
+	}
+	
+	
 	
 	/**
 	 * Uses the Euclidean algorithm to determine the greatest common 
