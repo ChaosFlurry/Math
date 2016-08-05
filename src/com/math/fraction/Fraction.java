@@ -19,6 +19,7 @@ public class Fraction {
 	public Fraction(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
+		simplify();
 	}
 	
 	@Override
@@ -39,129 +40,30 @@ public class Fraction {
 		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
 	
+	public Fraction simplify() {
+		int numerator = this.numerator;
+		int denominator = this.denominator;
+		int gcd = MathUtil.gcd(numerator, denominator);
+		
+		numerator = (numerator / gcd);
+		denominator = (denominator / gcd);
+		if (denominator < 0) {
+			numerator *= -1;
+			denominator *= -1;
+		}
+		
+		setNumerator(numerator);
+		setDenominator(denominator);
+		return new Fraction(numerator, denominator);
+	}
+	
 	public String toSimplify() {
 		Fraction f = this;
-		Fraction f0 = MathUtil.simplify(f);
-		if(denominator == 1) return Integer.toString(f0.getNumerator());
-		return (numerator == 0) ? "0" : f0.getNumerator() + "/" + f0.getDenominator();
+		Fraction f0 = f.simplify();
+		if (denominator == 1) return Integer.toString(f0.getNumerator());
+		return (numerator == 0) ? "0" : f0.getNumerator() 
+				+ "/" + f0.getDenominator();
 	}
-	
-	public Fraction reciprocal() {
-		return new Fraction(denominator, numerator);
-	}
-	
-	public Fraction add(int n) {
-		Fraction result = new Fraction(
-				numerator + n * denominator,
-				denominator);
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction add(Fraction f) {
-		int f1d = this.getDenominator();
-		int f2d = f.getDenominator();
-		int f1n = this.getNumerator();
-		int f2n = f.getNumerator();
-		
-		int gcd = MathUtil.gcd(f1d, f2d);
-		
-		// 1/4 + 1/6 = 1/4 * 3/3 + 1/6 * 2/2
-		// 1/4 + 1/6 = (1 * 3 + 1 * 2) / 6
-		// f1 + f2 = n * (d1 / gcd) + n1 * (d / gcd) / d * (d1 / gcd)
-		
-		Fraction result =  new Fraction(
-				f1n * (f2d / gcd) + f2n * (f1d / gcd),
-				f1d * (f2d / gcd));
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction subtract(int n) {
-		Fraction result = new Fraction(
-				getNumerator() - n * getDenominator(),
-				getDenominator());
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction subtract(Fraction f) {
-		int f1n = this.getNumerator();
-		int f1d = this.getDenominator();
-		int f2n = f.getNumerator();
-		int f2d = f.getDenominator();
-		
-		int gcd = MathUtil.gcd(f1d, f2d);
-		
-		// 1/4 - 1/6 = 1/4 * 3/3 - 1/6 * 2/2
-		// 1/4 - 1/6 = (1 * 3 - 1 * 2) / 6
-		// f1 - f2 = (f1n * (f2d / gcd) - f2n * (f1d / gcd)) / (f1d * (f2d / gcd))
-		
-		Fraction result =  new Fraction(
-				f1n * (f2d / gcd) - f2n * (f1d / gcd),
-				f1d * (f2d / gcd));
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction mutliply(int n) {
-		Fraction result = new Fraction(
-				getNumerator() * n,
-				getDenominator());
-		result =  MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction multiply(Fraction f) {
-		int f1n = this.getNumerator();
-		int f1d = this.getDenominator();
-		int f2n = f.getNumerator();
-		int f2d = f.getDenominator();
-		
-		// 1/4 * 1/6 = (1 * 1) / (4 * 6)
-		// f1 * f2 = f1n * f2n / f1d * f2d
-		
-		Fraction result = new Fraction(
-				f1n * f2n,
-				f1d * f2d);
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction divide(int n) {
-		Fraction result = new Fraction(
-				numerator,
-				denominator * n);
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction divide(Fraction f) {
-		int f1n = this.getNumerator();
-		int f1d = this.getDenominator();
-		int f2n = f.getNumerator();
-		int f2d = f.getDenominator();
-		
-		// 1/4 / 1/6 = 1/4 * 6/1
-		// 1/4 / 1/6 = (1 * 6) / (4 * 1)
-		// f1 / f2 = f1n * f2d / f1d * f2n
-		
-		Fraction result = new Fraction(
-				f1n * f2d,
-				f1d * f2n);
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	public Fraction pow(int power) {
-		Fraction result = new Fraction(
-				(int) Math.pow(getNumerator(), power),
-				(int) Math.pow(getDenominator(), power));
-		result = MathUtil.simplify(result);
-		return result;
-	}
-	
-	
 	
 	//TODO WHY??????????????????????????????????? (prob move to MathUtil.java, cause it doesnt seem to be used here)
 	/**
