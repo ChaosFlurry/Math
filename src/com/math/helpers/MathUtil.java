@@ -24,7 +24,7 @@ public class MathUtil {
 	 * @param f A Fraction to be simplified
 	 * @return A Fraction in lowest terms equivalent to f
 	 */
-	public static Fraction simplify(Fraction f) {
+	public static void simplify(Fraction f) {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 		int gcd = gcd(numerator, denominator);
@@ -36,7 +36,6 @@ public class MathUtil {
 		}
 		f.setNumerator(numerator);
 		f.setDenominator(denominator);
-		return new Fraction(numerator, denominator);
 	}
 	
 	/**
@@ -111,6 +110,7 @@ public class MathUtil {
 	
 	/**
 	 * Tests if a number is prime using the Sieve of Eratosthenes
+	 * 
 	 * @param n	an integer
 	 * @return	true if n is prime, false if n is composite
 	 */
@@ -137,7 +137,13 @@ public class MathUtil {
 		}
 		return isPrime;
 	}
-
+	
+	/**
+	 * Returns the divisors of a number.
+	 * 
+	 * @param n An integer
+	 * @return A List of all divisors of n
+	 */
 	public static List<Integer> divisors(int n) {
 		n = Math.abs(n);
 		List<Integer> divisors = new ArrayList<Integer>();
@@ -159,6 +165,11 @@ public class MathUtil {
 		return divisors;
 	}
 	
+	/**
+	 * Returns the prime factors of a number.
+	 * @param n An integer
+	 * @return A List of all prime factors of n
+	 */
 	public static List<Integer> primeFactors(int n) {
 		n = Math.abs(n);
 		//0 and 1 have no prime factors
@@ -210,7 +221,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator + n * denominator,
 				denominator);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -230,7 +242,8 @@ public class MathUtil {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) + f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -247,7 +260,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator - n * denominator,
 				denominator);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -267,7 +281,8 @@ public class MathUtil {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) - f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -283,7 +298,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator * n,
 				denominator);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -302,7 +318,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				f1n * f2n,
 				f1d * f2d);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -319,7 +336,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator,
 				denominator * n);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -338,7 +356,8 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				f1n * f2d,
 				f1d * f2n);
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 	
 	/**
@@ -354,6 +373,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				(int) Math.pow(numerator, power),
 				(int) Math.pow(denominator, power));
-		return MathUtil.simplify(result);
+		MathUtil.simplify(result);
+		return result;
 	}
 }

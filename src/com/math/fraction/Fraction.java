@@ -1,9 +1,5 @@
 package com.math.fraction;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.math.helpers.MathUtil;
 
 /**
@@ -28,12 +24,12 @@ public class Fraction {
 		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
 	
-	public String toSimplify() {
+	/*public String toSimplify() {
 		Fraction f0 = MathUtil.simplify(this);
 		if (denominator == 1) return Integer.toString(f0.getNumerator());
 		return (numerator == 0) ? "0" : f0.getNumerator() 
 				+ "/" + f0.getDenominator();
-	}
+	}*/
 	
 	public int getNumerator() {
 		return numerator;
