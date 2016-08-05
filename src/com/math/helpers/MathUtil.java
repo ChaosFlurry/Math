@@ -21,7 +21,6 @@ public class MathUtil {
 	 * @return A Fraction in lowest terms equivalent to f
 	 */
 	public static Fraction simplify(Fraction f) {
-
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 		int gcd = gcd(numerator, denominator);
@@ -30,7 +29,9 @@ public class MathUtil {
 		if (denominator < 0) {
 			numerator *= -1;
 			denominator *= -1;
-		}	
+		}
+		f.setNumerator(numerator);
+		f.setDenominator(denominator);
 		return new Fraction(numerator, denominator);
 	}
 	
@@ -59,7 +60,7 @@ public class MathUtil {
 	public static Fraction abs(Fraction f) {
 		/*
 		The numerator and denominator are changed to a positive value (if already
-		not positive), since the absolute value of a fraction cannot equate to 
+		not positive), since the absolute value cannot equate to 
 		a value less than 0.
 		*/
 		int numerator = (f.getNumerator() < 0) 
