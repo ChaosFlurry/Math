@@ -10,10 +10,10 @@ public class MathUtil {
 
 	/*
 	//TODO make it return a Fraction, and then change a bunch of code inside Fraction.java
-	public static void simplify(Fraction frac) {
-		//WHEN TO ACTUALLY USE GETTERS
-		int numerator = frac.getNumerator();
-		int denominator = frac.getDenominator();
+	public static void simplify(Fraction f) {
+		//Fraction f vs Fraction f
+		int numerator = f.getNumerator();
+		int denominator = f.getDenominator();
 		int gcd = gcd(numerator, denominator);
 		numerator = (numerator / gcd);
 		denominator = (denominator / gcd);
