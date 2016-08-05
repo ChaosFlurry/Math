@@ -1,6 +1,7 @@
 package com.math.radical;
 
 import com.math.fraction.Fraction;
+import com.math.helpers.MathUtil;
 
 /****
  * 
@@ -107,7 +108,7 @@ public class Radical {
 	//TODO move to MathUtil
 	public void simplify() {
 		System.out.println("Radicand: " + getRadicand());
-		if (Fraction.isPrime(getRadicand()) == false) {
+		if (MathUtil.isPrime(getRadicand()) == false) {
 			if (getDegree() == 0) {
 				undefined = true;
 			} else {
