@@ -19,12 +19,11 @@ public class Fraction {
 	public Fraction(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
-		simplify();
 	}
 	
 	@Override
 	public String toString() {
-		/*
+		/* TODO remove
 		if (numerator == 0) {
 			return "0";
 		} else if (denominator == 0) {
@@ -39,7 +38,8 @@ public class Fraction {
 		if(denominator == 1) return Integer.toString(numerator);
 		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
-	
+
+	/* TODO remove
 	public Fraction simplify() {
 		int numerator = this.numerator;
 		int denominator = this.denominator;
@@ -56,10 +56,10 @@ public class Fraction {
 		setDenominator(denominator);
 		return new Fraction(numerator, denominator);
 	}
+	*/
 	
 	public String toSimplify() {
-		Fraction f = this;
-		Fraction f0 = f.simplify();
+		Fraction f0 = MathUtil.simplify(this);
 		if (denominator == 1) return Integer.toString(f0.getNumerator());
 		return (numerator == 0) ? "0" : f0.getNumerator() 
 				+ "/" + f0.getDenominator();

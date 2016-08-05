@@ -1,6 +1,7 @@
 package com.math;
 
 import com.math.fraction.Fraction;
+import com.math.helpers.MathUtil;
 
 /***
  * 
@@ -17,7 +18,7 @@ public class Main {
 		
 		Fraction f1 = new Fraction(98, 4);
 		Fraction f2 = new Fraction(26, 2);
-		//System.out.println("\n98/4 + 26/2 = " + f1.add(f2));
+		System.out.println("\n98/4 + 26/2 = " + MathUtil.add(f1,f2));
 	}
 	
 }

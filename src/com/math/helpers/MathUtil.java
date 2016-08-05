@@ -9,21 +9,6 @@ import com.math.fraction.Fraction;
  */
 public class MathUtil {
 
-	/*
-	//TODO make it return a Fraction, and then change a bunch of code inside Fraction.java
-	public static void simplify(Fraction f) {
-		//Fraction f vs Fraction f
-		int numerator = f.getNumerator();
-		int denominator = f.getDenominator();
-		int gcd = gcd(numerator, denominator);
-		numerator = (numerator / gcd);
-		denominator = (denominator / gcd);
-		if (denominator < 0) {
-			numerator *= -1;
-			denominator *= -1;
-		}	
-	}
-	*/
 	
 	/**
 	 * Returns a fraction in its lowest terms. 
@@ -35,7 +20,6 @@ public class MathUtil {
 	 * @param f A Fraction to be simplified
 	 * @return A Fraction in lowest terms equivalent to f
 	 */
-	/*
 	public static Fraction simplify(Fraction f) {
 
 		int numerator = f.getNumerator();
@@ -49,7 +33,6 @@ public class MathUtil {
 		}	
 		return new Fraction(numerator, denominator);
 	}
-	*/
 	
 	/**
 	 * Returns the reciprocal of a Fraction f (1/f), which can be represented 
@@ -136,8 +119,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator + n * denominator,
 				denominator);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -157,8 +139,7 @@ public class MathUtil {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) + f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -175,8 +156,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator - n * denominator,
 				denominator);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -196,8 +176,7 @@ public class MathUtil {
 		Fraction result =  new Fraction(
 				f1n * (f2d / gcd) - f2n * (f1d / gcd),
 				f1d * (f2d / gcd));
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -213,8 +192,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator * n,
 				denominator);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -233,8 +211,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				f1n * f2n,
 				f1d * f2d);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -251,8 +228,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				numerator,
 				denominator * n);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -271,8 +247,7 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				f1n * f2d,
 				f1d * f2n);
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 	
 	/**
@@ -288,7 +263,6 @@ public class MathUtil {
 		Fraction result = new Fraction(
 				(int) Math.pow(numerator, power),
 				(int) Math.pow(denominator, power));
-		result.simplify();
-		return result;
+		return MathUtil.simplify(result);
 	}
 }
