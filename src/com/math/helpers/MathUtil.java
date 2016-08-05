@@ -59,8 +59,8 @@ public class MathUtil {
 	 */
 	public static Fraction abs(Fraction f) {
 		/*
-		The numerator and denominator are changed to a positive value (if already
-		not positive), since the absolute value cannot equate to 
+		The numerator and denominator are changed to a positive value 
+		(if already not positive), since the absolute value cannot equate to 
 		a value less than 0.
 		*/
 		int numerator = (f.getNumerator() < 0) 
@@ -258,7 +258,7 @@ public class MathUtil {
 	 * @param power An integer
 	 * @return f ** n
 	 */
-	public Fraction pow(Fraction f, int power) {
+	public static Fraction pow(Fraction f, int power) {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 		Fraction result = new Fraction(
