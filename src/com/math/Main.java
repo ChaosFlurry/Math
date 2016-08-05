@@ -9,6 +9,8 @@ import com.math.helpers.MathUtil;
  * Do all temporary backend tests here!
  * (This class is just for the devs to test)
  */
+
+@SuppressWarnings("all")
 public class Main {
 	
 	public static void main(String[] args) {
