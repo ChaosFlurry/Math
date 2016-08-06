@@ -2,6 +2,7 @@ package com.math;
 
 import com.math.fraction.Fraction;
 import com.math.helpers.MathUtil;
+import com.math.radical.Radical;
 
 /***
  * 
@@ -24,5 +25,9 @@ public class Main {
 		
 		Fraction f3 = new Fraction (2, 4);
 		System.out.println("2/4 --> " + f3);
+		
+		Radical r = new Radical(2,40,2);
+		System.out.println("Unsimplified: " + r.toString());
+		System.out.println("Simplified: " + MathUtil.simplify(r).toString());
 	}
 }
