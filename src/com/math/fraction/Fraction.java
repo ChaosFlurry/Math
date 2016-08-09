@@ -15,7 +15,6 @@ public class Fraction {
 	public Fraction(int numerator, int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
-		MathUtil.simplify(this);
 	}
 
 	@Override
