@@ -198,10 +198,10 @@ public class MathOperation {
 		int f1d = f1.getDenominator();
 		int f2n = f2.getNumerator();
 		int f2d = f2.getDenominator();
-		
+
 		int numerator = f1n * f2n;
 		int denominator = f1d * f2d;
-		
+
 		Fraction result = new Fraction(numerator, denominator);
 		MathUtil.simplify(result);
 		return result;
@@ -229,14 +229,15 @@ public class MathOperation {
 	/**
 	 * Multiplies a List of Fractions.
 	 * 
-	 * @param fractions A List of Fractions
+	 * @param fractions
+	 *            A List of Fractions
 	 * @return The product all Fractions as a Fraction.
 	 */
 	public static Fraction multiply(List<Fraction> fractions) {
 		if (fractions.size() == 0) {
 			return new Fraction(0, 1);
 		}
-		
+
 		Fraction result = new Fraction(1, 1);
 		for (Fraction f : fractions) {
 			result = multiply(f, result);
@@ -276,7 +277,7 @@ public class MathOperation {
 		int f1d = f1.getDenominator();
 		int f2n = f2.getNumerator();
 		int f2d = f2.getDenominator();
-		
+
 		int numerator = f1n * f2d;
 		int denominator = f1d * f2n;
 
@@ -284,36 +285,38 @@ public class MathOperation {
 		MathUtil.simplify(result);
 		return result;
 	}
-	
+
 	/**
 	 * Divides multiple Fractions.
 	 * 
-	 * @param fractions An arbitrary amount of Fractions
+	 * @param fractions
+	 *            An arbitrary amount of Fractions
 	 * @return The quotient of all Fractions as a Fraction
 	 */
 	public static Fraction divide(Fraction... fractions) {
 		if (fractions.length == 0) {
 			return new Fraction(0, 1);
 		}
-		
+
 		Fraction result = new Fraction(1, 1);
 		for (Fraction f : fractions) {
 			result = divide(f, result);
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Divides a List of Fractions.
 	 * 
-	 * @param fractions A List of Fractions.
+	 * @param fractions
+	 *            A List of Fractions.
 	 * @return The quotient of all Fractions as a Fraction
 	 */
 	public static Fraction divide(List<Fraction> fractions) {
 		if (fractions.size() == 0) {
 			return new Fraction(0, 1);
 		}
-		
+
 		Fraction result = new Fraction(1, 1);
 		for (Fraction f : fractions) {
 			result = divide(f, result);
@@ -324,7 +327,8 @@ public class MathOperation {
 	/**
 	 * Raises a Fraction to the nth power.
 	 * 
-	 * @param f-fraction
+	 * @param f
+	 *            A fraction
 	 * @param power
 	 *            An integer
 	 * @return f ** n
@@ -332,7 +336,7 @@ public class MathOperation {
 	public static Fraction pow(Fraction f, int power) {
 		int numerator = (int) Math.pow(f.getNumerator(), power);
 		int denominator = (int) Math.pow(f.getDenominator(), power);
-		
+
 		Fraction result = new Fraction(numerator, denominator);
 		MathUtil.simplify(result);
 		return result;

@@ -1,7 +1,5 @@
 package com.math.fraction;
 
-import com.math.helpers.MathUtil;
-
 /**
  * 
  * @author ChaosFlurry
@@ -38,6 +36,11 @@ public class Fraction {
 
 	public void setDenominator(int denominator) {
 		this.denominator = denominator;
+	}
+	
+	public boolean isUndefined() {
+		if (denominator == 0) return true;
+		else return false;
 	}
 
 	public double decimalValue() {

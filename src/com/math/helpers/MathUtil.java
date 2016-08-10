@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.math.fraction.Fraction;
-import com.math.radical.Radical;
+import com.math.radical.SingleRadical;
 
 /***
  * 
@@ -217,9 +217,9 @@ public class MathUtil {
 	/***
 	 * Uses Factorials
 	 * 
-	 * @param "n"
-	 *            the integer
-	 * @return Double.NaN casted to int if n is negative, n! elsewise.
+	 * @param n
+	 *            An integer
+	 * @return 0 if n is negative, n! elsewise.
 	 */
 	// http://nntdm.net/papers/nntdm-19/NNTDM-19-2-30_42.pdf
 	public static int factorial(int n) {
@@ -248,7 +248,7 @@ public class MathUtil {
 	 *            - the radical to simplify.
 	 */
 	//TODO Refactor
-	public static Radical simplify(Radical r) {
+	public static SingleRadical simplify(SingleRadical r) {
 		int radicand = r.getRadicand();
 		int degree = r.getIndex();
 		int coefficient = r.getCoefficient();
@@ -259,7 +259,7 @@ public class MathUtil {
 			// If the degree is 0, the radical is undefined. This is set, then
 			// returns the radical given.
 			if (degree == 0) {
-				r.setUndefined(true);
+				//r.setUndefined(true);
 				return r;
 			}
 			// If the radical is not prime and degree != 0, we simplify it.
@@ -272,7 +272,7 @@ public class MathUtil {
 						System.out.println("Simplified Radicand: " + radicand);
 						// returns the radical
 						// TODO find out a way maybe to use recursion?
-						Radical result = new Radical(coefficient, radicand, degree);
+						SingleRadical result = new SingleRadical(coefficient, radicand, degree);
 						return result;
 					}
 
