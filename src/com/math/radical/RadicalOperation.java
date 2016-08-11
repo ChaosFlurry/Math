@@ -2,71 +2,71 @@ package com.math.radical;
 
 import java.util.List;
 
-public interface RadicalOperation {
+public class RadicalOperation {
 	//TODO Move to MathOperation
-	//TODO Move simplify() to this class (keep it in SingleRadical/MultiRadical until complete)
-	public static RadicalContainer add(RadicalObject r, int n) {
+	//TODO Move simplify() to this class (keep it in Radical until complete)
+	
+	public static RadicalContainer add(Radical r, int n) {
 		//represent an int as int(sqrt(1))
+	}
+	
+	public static List<Radical> add(Radical r1, Radical r2) {
 		
 	}
 	
-	public static RadicalContainer add(RadicalObject r1, RadicalObject r2) {
+	public static List<Radical> add(Radical... radicals) {
 		
 	}
 	
-	public static RadicalContainer add(RadicalObject... radicals) {
+	public static List<Radical> add(List<Radical> radicals) {
 		
 	}
 	
-	public static RadicalContainer add(List<RadicalObject> radicals) {
+	public static List<Radical> subtract(Radical r, int n) {
 		
 	}
 	
-	public static RadicalContainer subtract(RadicalContainer r, int n) {
+	public static List<Radical> subtract(int n, Radical r) {
 		
 	}
 	
-	public static RadicalContainer subtract(int n, RadicalContainer r) {
+	public static List<Radical> subtract(Radical... radicals) {
 		
 	}
 	
-	public static RadicalContainer subtract(RadicalContainer... radicals) {
+	public static List<Radical> subtract(List<Radical> radicals) {
 		
 	}
 	
-	public static RadicalContainer subtract(List<RadicalContainer> radicals) {
+	public static List<Radical> multiply(Radical r, int n) {
 		
 	}
 	
-	public static RadicalContainer multiply(RadicalContainer r, int n) {
+	public static List<Radical> multiply(Radical r1, Radical r2) {
 		
 	}
 	
-	public static RadicalContainer multiply(RadicalContainer r1, RadicalContainer r2) {
+	public static List<Radical> multiply(Radical... radicals) {
 		
 	}
 	
-	public static RadicalContainer multiply(RadicalContainer... radicals) {
+	public static List<Radical> multiply(List<Radical> radicals) {
 		
 	}
 	
-	public static RadicalContainer multiply(List<RadicalContainer> radicals) {
+	public static List<Radical> divide(Radical r, int n) {
 		
 	}
 	
-	public static RadicalContainer divide(RadicalContainer r, int n) {
+	public static List<Radical> divide(Radical r1, Radical r2) {
 		
 	}
 	
-	public static RadicalContainer divide(RadicalContainer r1, RadicalContainer r2) {
+	public static RadicalContainer divide(Radical... radicals) {
 		
 	}
 	
-	public static RadicalContainer divide(RadicalContainer... radicals) {
-		
-	}
-	
-	public static RadicalContainer divide(List<RadicalContainer> radicals) {
+	public static RadicalContainer divide(List<Radical> radicals) {
 		
 	}
 }

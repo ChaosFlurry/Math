@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.math.fraction.Fraction;
-import com.math.radical.SingleRadical;
+import com.math.radical.Radical;
 
 /***
  * 
@@ -248,7 +248,7 @@ public class MathUtil {
 	 *            - the radical to simplify.
 	 */
 	//TODO Refactor
-	public static SingleRadical simplify(SingleRadical r) {
+	public static Radical simplify(Radical r) {
 		int radicand = r.getRadicand();
 		int degree = r.getIndex();
 		int coefficient = r.getCoefficient();
@@ -272,7 +272,7 @@ public class MathUtil {
 						System.out.println("Simplified Radicand: " + radicand);
 						// returns the radical
 						// TODO find out a way maybe to use recursion?
-						SingleRadical result = new SingleRadical(coefficient, radicand, degree);
+						Radical result = new Radical(coefficient, radicand, degree);
 						return result;
 					}
 

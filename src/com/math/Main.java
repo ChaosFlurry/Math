@@ -3,10 +3,7 @@ package com.math;
 import com.math.fraction.Fraction;
 import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
-import com.math.radical.SingleRadical;
 import com.math.radical.Radical;
-import com.math.radical.RadicalContainer;
-import com.math.radical.RadicalObject;
 
 /***
  * 
@@ -30,7 +27,7 @@ public class Main {
 		Fraction f3 = new Fraction(2, 4);
 		System.out.println("2/4 --> " + f3);
 
-		SingleRadical r = new SingleRadical(2, 40, 2);
+		Radical r = new Radical(2, 40, 2);
 		System.out.println("Unsimplified: " + r.toString());
 		System.out.println("Simplified: " + MathUtil.simplify(r).toString());
 
@@ -46,9 +43,6 @@ public class Main {
 		Fraction batchAddition = MathOperation.add();
 		System.out.println(batchAddition);
 		
-		Radical test = new RadicalObject(2, 2, 2);
-		System.out.println(test.toString());
-		System.out.println(ro.toString());
 		/*
 		 * - MathUtil.factorial() returns 0 instead of UNDEFINED - MathOperation
 		 * renamed to MathFunctions - moved methods related to manipulation of
@@ -73,5 +67,10 @@ public class Main {
 		
 		//add average, mean, max, min etc to MathUtil
 		//add Fraction comparator
+		
+		//simplify Radical methods (just return a List of single Radical elements)
+		
+		//removed MultiRadical, RadicalContianer, RadicalObject
+		//RadicalOperation changed from Interface to class (will be merged with MathOperations in the future)
 	}
 }
