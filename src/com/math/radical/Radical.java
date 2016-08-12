@@ -1,7 +1,6 @@
 package com.math.radical;
 
 import com.math.fraction.Fraction;
-import com.math.helpers.MathUtil;
 
 /****
  * 
@@ -27,6 +26,7 @@ public class Radical {
 		this.coefficient = 1;
 		this.radicand = radicand;
 		this.index = index;
+
 	}
 
 	public Radical(int coefficient, int radicand, int index) {
@@ -93,6 +93,8 @@ public class Radical {
 		// undefined, return undefined
 		//if (isUndefined())
 			//return "undefined";
+		
+		/*
 		if (radicand == 1)
 			return Integer.toString(coefficient);
 		if (coefficient == 1) {
@@ -103,15 +105,21 @@ public class Radical {
 		}
 
 		return (coefficient == 0 || radicand == 0) ? "0" : coefficient + "*" + radicand + "^(1/" + index + ")";
+		*/
+		if (radicand == 0) {
+			return "0";
+		}
+		if (radicand == 1) {
+			return Integer.toString(coefficient);
+		}
+		
 	}
 	
 	public double decimalValue() {
-		double result;
-		
-		return result;
+		return coefficient * Math.pow(radicand, 1.0 / index);
 	}
 
-	public void simplify() {
+	/*public void simplify() {
 		// System.out.println("Radicand: " + getRadicand());
 		if (!(MathUtil.isPrime(getRadicand()))) {
 			if (getIndex() == 0) {
@@ -127,7 +135,5 @@ public class Radical {
 					}
 				}
 			}
-		}
-	}
-
+		}*/
 }

@@ -13,7 +13,7 @@ import com.math.radical.Radical;
 
 @SuppressWarnings("all")
 public class Main {
-
+	// TODO Unit Tests for simplify()
 	public static void main(String[] args) {
 		Fraction f0 = new Fraction(10, 4);
 
@@ -28,8 +28,8 @@ public class Main {
 		System.out.println("2/4 --> " + f3);
 
 		Radical r = new Radical(2, 40, 2);
-		System.out.println("Unsimplified: " + r.toString());
-		System.out.println("Simplified: " + MathUtil.simplify(r).toString());
+		// System.out.println("Unsimplified: " + r.toString());
+		// System.out.println("Simplified: " + MathUtil.simplify(r).toString());
 
 		Double nan = Double.NaN;
 		int x = (int) Double.NaN;
@@ -42,7 +42,20 @@ public class Main {
 		}
 		Fraction batchAddition = MathOperation.add();
 		System.out.println(batchAddition);
+
+		int root = MathUtil.nthRoot(-8, 3);
+		System.out.println(root);
+
+		Radical simplify = new Radical(2, -64, 3);
+		MathUtil.simplify(simplify);
 		
+		Radical rt2 = new Radical(250, 15);
+		System.out.println(rt2.decimalValue());
+
+		System.out.println("coefficient: " + simplify.getCoefficient());
+		System.out.println("radicand: " + simplify.getRadicand());
+		System.out.println("index: " + simplify.getIndex());
+
 		/*
 		 * - MathUtil.factorial() returns 0 instead of UNDEFINED - MathOperation
 		 * renamed to MathFunctions - moved methods related to manipulation of
@@ -57,20 +70,23 @@ public class Main {
 		 */
 
 		/*
-		 * - Adjusted wording in javadocs
-		 * - Added support for undefined in Fraction
+		 * - Adjusted wording in javadocs - Added support for undefined in
+		 * Fraction
 		 */
-		
-		//use 1 form of Radical?
-		//Since Radicals with more than 1 term are just multiple Radicals chained together
-		//return List<Radical> for add?
-		
-		//add average, mean, max, min etc to MathUtil
-		//add Fraction comparator
-		
-		//simplify Radical methods (just return a List of single Radical elements)
-		
-		//removed MultiRadical, RadicalContianer, RadicalObject
-		//RadicalOperation changed from Interface to class (will be merged with MathOperations in the future)
+
+		// use 1 form of Radical?
+		// Since Radicals with more than 1 term are just multiple Radicals
+		// chained together
+		// return List<Radical> for add?
+
+		// add average, mean, max, min etc to MathUtil
+		// add Fraction comparator
+
+		// simplify Radical methods (just return a List of single Radical
+		// elements)
+
+		// removed MultiRadical, RadicalContianer, RadicalObject
+		// RadicalOperation changed from Interface to class (will be merged with
+		// MathOperations in the future)
 	}
 }

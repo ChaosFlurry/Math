@@ -22,10 +22,10 @@ public class MathUtil {
 	 * multiplying both the numerator and denominator by -1).
 	 * 
 	 * @param f
-	 *            A Fraction to be simplified
+	 *            The Fraction to be simplified
 	 * @return A Fraction in lowest terms equivalent to f
 	 */
-	public static void simplify(Fraction f) {
+	public static Fraction simplify(Fraction f) {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 		int gcd = gcd(numerator, denominator);
@@ -35,8 +35,38 @@ public class MathUtil {
 			numerator *= -1;
 			denominator *= -1;
 		}
-		f.setNumerator(numerator);
-		f.setDenominator(denominator);
+		//f.setNumerator(numerator);
+		//f.setDenominator(denominator);
+		return new Fraction(numerator, denominator);
+	}
+	
+	/**
+	 * 
+	 * @param r The Radical to be simplified
+	 * @return A Radical equivalent to r that cannot be further simplified
+	 */
+	public static Radical simplify(Radical r) {
+		int coefficient = r.getCoefficient();
+		int radicand = r.getRadicand();
+		int index = r.getIndex();
+
+		if (radicand < 0 && index % 2 != 0) {
+			coefficient *= -1;
+			radicand *= -1;
+		}
+		
+		int nthRoot = MathUtil.nthRoot(radicand, index);
+		System.out.println("Nthroot: " + nthRoot);
+		for (int i = nthRoot; i >= 2; i--) {
+			if (radicand % Math.pow(i, index) == 0) {
+				radicand = (int) (radicand / Math.pow(i, index));
+				coefficient = coefficient * i;
+			}
+		}
+		//r.setCoefficient(coefficient);
+		//r.setRadicand(radicand);
+		// index remains the same
+		return new Radical(coefficient, radicand, index);
 	}
 
 	/**
@@ -109,6 +139,36 @@ public class MathUtil {
 
 	public static int lcm(int a, int b) {
 		return a / gcd(a, b) * b;
+	}
+	
+	/**
+	 * Finds the nth root of an integer. Returns 0 if n is 0 or the degree is even.
+	 * 
+	 * @param n An integer
+	 * @return The nth root of n floored to an integer.
+	 */
+	public static int nthRoot(int n, int degree) {
+		if (n < 0 && degree % 2 == 0) {
+			return 0;
+		}
+		
+		int result = 0;
+		if (n > 0) {
+			for (int i = 1; i < n; i++) {
+				if (Math.pow(i, degree) > n) {
+					result = i - 1;
+					break;
+				}
+			}
+		} else if (n < 0) {
+			for (int i = -1; i > n; i--) {
+				if (Math.pow(i, degree) < n) {
+					result = i + 1;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -240,47 +300,4 @@ public class MathUtil {
 	 * 
 	 * }
 	 */
-
-	/***
-	 * Simplifies A Radical.
-	 * 
-	 * @param r
-	 *            - the radical to simplify.
-	 */
-	//TODO Refactor
-	public static Radical simplify(Radical r) {
-		int radicand = r.getRadicand();
-		int degree = r.getIndex();
-		int coefficient = r.getCoefficient();
-		System.out.println("Radicand: " + radicand);
-		// if the Radical is not prime, carry on with simplification. If not,
-		// return the radical given.
-		if (!(MathUtil.isPrime(radicand))) {
-			// If the degree is 0, the radical is undefined. This is set, then
-			// returns the radical given.
-			if (degree == 0) {
-				//r.setUndefined(true);
-				return r;
-			}
-			// If the radical is not prime and degree != 0, we simplify it.
-			else {
-				int nthRoot = (int) Math.pow(radicand, (1.0 / degree));
-				for (int i = nthRoot; i >= 2; i--) {
-					if (radicand % i == 0) {
-						coefficient *= i;
-						radicand /= i;
-						System.out.println("Simplified Radicand: " + radicand);
-						// returns the radical
-						// TODO find out a way maybe to use recursion?
-						Radical result = new Radical(coefficient, radicand, degree);
-						return result;
-					}
-
-				}
-			}
-		}
-		// If all else fails, return the radical given.
-		return r;
-	}
-
 }
