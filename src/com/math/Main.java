@@ -1,5 +1,8 @@
 package com.math;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.math.fraction.Fraction;
 import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
@@ -22,8 +25,8 @@ public class Main {
 
 		Fraction f1 = new Fraction(98, 4);
 		Fraction f2 = new Fraction(26, 2);
-		System.out.println("\n98/4 + 26/2 = " + MathOperation.add(f1, f2));
-
+		System.out.println("\n98/4 + 26/2 = " + MathOperation.add(f1, f2).toString());
+		
 		Fraction f3 = new Fraction(2, 4);
 		System.out.println("2/4 --> " + f3);
 
@@ -55,6 +58,32 @@ public class Main {
 		System.out.println("coefficient: " + simplify.getCoefficient());
 		System.out.println("radicand: " + simplify.getRadicand());
 		System.out.println("index: " + simplify.getIndex());
+		
+		Radical stringTest0 = new Radical(0, 0, 0);
+		Radical stringTest1 = new Radical(1, 1, 1);
+		Radical stringTest2 = new Radical(2, 2, 2);
+		Radical stringTest3 = new Radical(3, 3, 3);
+		Radical stringTest4 = new Radical(-8, 3);
+		Radical stringTest5 = new Radical(8, -3);
+		Radical stringTest6 = new Radical(8, -2);
+		Radical stringTest7 = new Radical(7, -3);
+		List<Radical> stringTests = new ArrayList<Radical>();
+		stringTests.add(stringTest0);
+		stringTests.add(stringTest1);
+		stringTests.add(stringTest2);
+		stringTests.add(stringTest3);
+		stringTests.add(stringTest4);
+		stringTests.add(stringTest5);
+		stringTests.add(stringTest6);
+		stringTests.add(stringTest7);
+		
+		for (Radical stringTest : stringTests) {
+			System.out.println(stringTest.toString());
+		}
+		
+		System.out.println("coefficient: " + stringTest5.getCoefficient());
+		System.out.println("radicand: " + stringTest5.getRadicand());
+		System.out.println("index: " + stringTest5.getIndex());
 
 		/*
 		 * - MathUtil.factorial() returns 0 instead of UNDEFINED - MathOperation

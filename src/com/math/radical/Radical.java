@@ -1,6 +1,7 @@
 package com.math.radical;
 
 import com.math.fraction.Fraction;
+import com.math.helpers.MathUtil;
 
 /****
  * 
@@ -11,40 +12,18 @@ public class Radical {
 	int coefficient;
 	int radicand;
 	int index;
-	//boolean undefined;
-
-	// let a radical be more than 1 radicand
-	// i.e. Radical r can be represented as multiple terms as e.g. 2sqrt5 +
-	// sqrt3
-	// let there be a list of Integers denoting coefficients, radicands, and
-	// degrees for each term
 
 	// TODO fractional coefficients/radicands?
 	public Radical(int radicand, int index) {
-		// check if radicand is negative
-		// check if index is 0
 		this.coefficient = 1;
 		this.radicand = radicand;
 		this.index = index;
-
 	}
 
 	public Radical(int coefficient, int radicand, int index) {
 		this.coefficient = coefficient;
 		this.radicand = radicand;
 		this.index = index;
-	}
-
-	public Radical(int radicand, Fraction index) {
-		this.coefficient = 1;
-		this.radicand = (int) (Math.pow(radicand, index.getNumerator()));
-		this.index = index.getDenominator();
-	}
-
-	public Radical(int coefficient, int radicand, Fraction index) {
-		this.coefficient = coefficient;
-		this.radicand = (int) (Math.pow(radicand, index.getNumerator()));
-		this.index = index.getDenominator();
 	}
 
 	public int getCoefficient() {
@@ -70,8 +49,7 @@ public class Radical {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-
-	/* TODO i guess make it shorter? looks weird */
+	
 	@Override
 	public String toString() {
 		/*
@@ -106,17 +84,90 @@ public class Radical {
 
 		return (coefficient == 0 || radicand == 0) ? "0" : coefficient + "*" + radicand + "^(1/" + index + ")";
 		*/
-		if (radicand == 0) {
+		
+		/*
+		 * Radical is undefined when:
+		 * 0th root
+		 * even roots of negative numbers
+		 * 
+		 * Radical is 0 when:
+		 * any root of 0 while Radical is not undefined
+		 * coefficient is 0 and Radical is not undefined
+		 * 
+		 * Radical is 1 when:
+		 * coefficient is 1 and radicand is 1
+		 * 
+		 * Radical is n when:
+		 * index is 1
+		 * 
+		 * When the index is negative:
+		 * Radical is 1/n ^ index (while coefficient is not 0)
+		 * 
+		 * normal cases:
+		 * coefficient is 1, radical is not 0, index is non negative and not 0
+		 * coefficient is -1, ...
+		 * coefficient is > 1, ...
+		 * coefficient is < -1, ...
+		 */
+		
+		//Radical formatting:
+		//coefficient + "*" + radicand + "^" + "(" + "1/" + index
+		//e.g. Radical(10, 5, 2) will be displayed as 10*5^(1/2)
+		//However, if a Radical can be simplified such that it no longer is a root (i.e. Radical(49, 2)), 
+		//it will be displayed as an integer (e.g. Radical(16, 4) becomes 4)
+		
+		Radical copyOf = MathUtil.simplify(this);
+		int coefficient = copyOf.getCoefficient();
+		int radicand = copyOf.getRadicand();
+		int index = copyOf.getIndex();
+		
+		//Special cases:
+		//Radical is undefined or Radical == 0:
+		//Note: undefined * 0 = undefined
+		
+		if (isUndefined() == true) {
+			return "Undefined";
+		}
+		if (radicand == 0 && index > 0) {
 			return "0";
 		}
-		if (radicand == 1) {
+		if (radicand == 1 && index != 0) {
 			return Integer.toString(coefficient);
 		}
+		if (radicand == -1 && index == 1) {
+			return Integer.toString(coefficient * -1);
+		}
+		if (radicand == -1 && index == -1) {
+			return Integer.toString(coefficient * -1);
+		}
+		if (radicand > 0 && radicand != 1 && index == 1) {
+			return Integer.toString(radicand * coefficient);
+		}
+		if (radicand < 0 && index == 1) {
+			return Integer.toString(radicand * coefficient);
+		}
 		
+		//default case: radicand is not -1, 1, 0; index is non-negative, index is not 1, 0
+		String result;
+		result = (index < 0) ? radicand + "^(-1/" + Math.abs(index) + ")" : radicand + "^" + index;
+		if (coefficient == -1) {
+			result += "-";
+		} else if (coefficient == 0) {
+			result = "0";
+		}
+		return result;
 	}
 	
 	public double decimalValue() {
 		return coefficient * Math.pow(radicand, 1.0 / index);
+	}
+	
+	public boolean isUndefined() {
+		boolean result = false;
+		if (index == 0) result = true;
+		if (index < 0 && radicand == 0) result = true;
+		if (radicand < 0 && index % 2 == 0) result = true;
+		return result;
 	}
 
 	/*public void simplify() {

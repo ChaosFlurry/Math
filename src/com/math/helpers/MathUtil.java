@@ -56,7 +56,6 @@ public class MathUtil {
 		}
 		
 		int nthRoot = MathUtil.nthRoot(radicand, index);
-		System.out.println("Nthroot: " + nthRoot);
 		for (int i = nthRoot; i >= 2; i--) {
 			if (radicand % Math.pow(i, index) == 0) {
 				radicand = (int) (radicand / Math.pow(i, index));
