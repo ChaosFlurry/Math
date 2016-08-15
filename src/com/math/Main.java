@@ -23,9 +23,16 @@ public class Main {
 		// System.out.printf("The Decimal of f0 is: " + f0.decimalValue() +
 		// "\nThe Value of f0 is: " + f0.toSimplify());
 
+		/*
 		Fraction f1 = new Fraction(98, 4);
 		Fraction f2 = new Fraction(26, 2);
-		System.out.println("\n98/4 + 26/2 = " + MathOperation.add(f1, f2).toString());
+		System.out.println("\n98/4 + 26/2 = " + MathUtil.simplify(MathOperation.add(f1, f2)).toString());
+		*/
+		
+		Fraction f1 = new Fraction(20, 2);
+		Fraction f2 = new Fraction(65, 3);
+		System.out.println("(20/2)/(65/3) = " + MathUtil.simplify(MathOperation.divide(f1, f2)).toString());
+			
 		
 		Fraction f3 = new Fraction(2, 4);
 		System.out.println("2/4 --> " + f3);
