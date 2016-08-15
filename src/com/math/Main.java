@@ -7,13 +7,13 @@ import com.math.fraction.Fraction;
 import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
 import com.math.radical.Radical;
+import com.math.radical.RadicalOperation;
 
 /***
  * 
- * @author Archiving Do all temporary backend tests here! (This class is just
+ * @author Archiving Do all temporary backend tests here. (This class is just
  *         for the devs to test)
  */
-
 @SuppressWarnings("all")
 public class Main {
 	// TODO Unit Tests for simplify()
@@ -52,13 +52,29 @@ public class Main {
 		Radical simplify = new Radical(2, -64, 3);
 		MathUtil.simplify(simplify);
 		
-		Radical rt2 = new Radical(250, 15);
-		System.out.println(rt2.decimalValue());
-
-		System.out.println("coefficient: " + simplify.getCoefficient());
-		System.out.println("radicand: " + simplify.getRadicand());
-		System.out.println("index: " + simplify.getIndex());
+		Radical rt2 = new Radical(1, -8, -3);
+		rt2 = MathUtil.simplify(rt2);
 		
+		System.out.println("String: " + rt2.toString());
+		System.out.println("coefficient: " + rt2.getCoefficient());
+		System.out.println("radicand: " + rt2.getRadicand());
+		System.out.println("index: " + rt2.getIndex());
+		System.out.println(rt2.decimalValue());
+		System.out.println(rt2.isUndefined());
+		System.out.println(rt2.isZero());
+		System.out.println(rt2.isANumber());
+		
+		Radical add1 = new Radical(10000, 4);
+		Radical add2 = new Radical(100, 2);
+		List<Radical> sum = RadicalOperation.add(add1, add2);
+		for (Radical radical : sum) {
+			System.out.println(radical);
+		}
+		
+		//System.out.println(MathUtil.nthRoot(-8, 3));
+		//System.out.println(Math.pow(-8.0, (1.0/3.0)));
+		
+		/*
 		Radical stringTest0 = new Radical(0, 0, 0);
 		Radical stringTest1 = new Radical(1, 1, 1);
 		Radical stringTest2 = new Radical(2, 2, 2);
@@ -84,6 +100,7 @@ public class Main {
 		System.out.println("coefficient: " + stringTest5.getCoefficient());
 		System.out.println("radicand: " + stringTest5.getRadicand());
 		System.out.println("index: " + stringTest5.getIndex());
+		*/
 
 		/*
 		 * - MathUtil.factorial() returns 0 instead of UNDEFINED - MathOperation
