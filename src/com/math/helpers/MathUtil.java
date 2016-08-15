@@ -16,10 +16,9 @@ import com.math.radical.Radical;
 public class MathUtil {
 
 	/**
-	 * Returns a fraction in its lowest terms. A fraction cannot be further
+	 * Returns a Fraction in its lowest terms. A fraction cannot be further
 	 * simplified when its numerator or denominator is prime or 1. If the
-	 * denominator of a fraction is negative, it is changed to positive (by
-	 * multiplying both the numerator and denominator by -1).
+	 * denominator of a fraction is negative, it is changed to positive.
 	 * 
 	 * @param f
 	 *            The Fraction to be simplified
@@ -35,36 +34,67 @@ public class MathUtil {
 			numerator *= -1;
 			denominator *= -1;
 		}
-		//f.setNumerator(numerator);
-		//f.setDenominator(denominator);
+		// f.setNumerator(numerator);
+		// f.setDenominator(denominator);
 		return new Fraction(numerator, denominator);
 	}
-	
+
 	/**
+	 * Simplifies a Radical.
 	 * 
-	 * @param r The Radical to be simplified
+	 * @param r
+	 *            The Radical to be simplified
 	 * @return A Radical equivalent to r that cannot be further simplified
 	 */
 	public static Radical simplify(Radical r) {
+		// TODO simplification of higher power roots
+		// (4th root of 100 becomes sqrt 10)
+		// (6th root of 10000 becomes Radical(100, 3))
+		// use fractional powers
+		// e.g. Radical(10000, 4)
+		// find greatest possible roots of radicand up to index
+		// sqrt 10000 is 100 but 4th root of 10000 is 10
+		// Radical(100, 2) could still be simplified into Radical(10, 4)
+
 		int coefficient = r.getCoefficient();
 		int radicand = r.getRadicand();
 		int index = r.getIndex();
-
-		if (radicand < 0 && index % 2 != 0) {
+		
+		if (radicand == -1 && index % 2 != 0) {
+			//any odd root of -1 = -1
+			coefficient *= -1;
+			radicand = 1;
+			index = 1;
+		} else if (radicand == 1 && index != 0) {
+			//any root of 1 (except 0) = 1
+			radicand = 1;
+			index = 1;
+		} else if (radicand < 0 && index > 0 && index % 2 != 0) {
+			//any odd root of -n = -(root n)
 			coefficient *= -1;
 			radicand *= -1;
+		}
+
+		for (int i = index; i > 1; i--) {
+			if (hasExactNthRoot(radicand, i)) {
+				int nthRoot = nthRoot(radicand, i);
+				Fraction fractionalExponent = MathUtil.simplify(new Fraction(i, index));
+				radicand = pow(nthRoot, fractionalExponent.getNumerator());
+				index = fractionalExponent.getDenominator();
+			}
 		}
 		
 		int nthRoot = MathUtil.nthRoot(radicand, index);
 		for (int i = nthRoot; i >= 2; i--) {
-			if (radicand % Math.pow(i, index) == 0) {
-				radicand = (int) (radicand / Math.pow(i, index));
-				coefficient = coefficient * i;
+			if (radicand % pow(i, index) == 0) {
+				radicand /= pow(i, index);
+				coefficient *= i;
 			}
 		}
-		//r.setCoefficient(coefficient);
-		//r.setRadicand(radicand);
-		// index remains the same
+		
+		// r.setCoefficient(coefficient);
+		// r.setRadicand(radicand);
+		// r.setIndex(index);
 		return new Radical(coefficient, radicand, index);
 	}
 
@@ -91,7 +121,7 @@ public class MathUtil {
 	 *            A Fraction
 	 * @return A Fraction which has the absolute value of f
 	 */
-	
+
 	public static Fraction abs(Fraction f) {
 		/*
 		 * The numerator and denominator are changed to a positive value (if
@@ -139,21 +169,44 @@ public class MathUtil {
 	public static int lcm(int a, int b) {
 		return a / gcd(a, b) * b;
 	}
-	
+
+	public static int pow(int n, int degree) {
+		int result;
+		if (degree < 0) {
+			result = 0;
+		} else if (degree == 0) {
+			result = 0;
+		} else if (degree == 1) {
+			result = n;
+		} else {
+			// 1 * n = n
+			result = 1;
+			for (int i = 0; i < degree; i++) {
+				result *= n;
+			}
+		}
+		return result;
+	}
+
 	/**
-	 * Finds the nth root of an integer. Returns 0 if n is 0 or the degree is even.
+	 * Finds the (real-valued) nth root of an integer. Returns 0 if n is 0,
+	 * degree < 0, or if n < 0 and the degree is even.
 	 * 
-	 * @param n An integer
+	 * @param n
+	 *            An integer
 	 * @return The nth root of n floored to an integer.
 	 */
 	public static int nthRoot(int n, int degree) {
-		if (n < 0 && degree % 2 == 0) {
+		if (n == 0 || degree < 0 || (n < 0 && degree % 2 == 0)) {
 			return 0;
 		}
-		
+		if (degree == 1 || n == 1 || n == -1) {
+			return n;
+		}
+
 		int result = 0;
 		if (n > 0) {
-			for (int i = 1; i < n; i++) {
+			for (int i = 1; i <= n; i++) {
 				if (Math.pow(i, degree) > n) {
 					result = i - 1;
 					break;
@@ -170,17 +223,24 @@ public class MathUtil {
 		return result;
 	}
 
+	public static boolean hasExactNthRoot(int n, int degree) {
+		boolean result = false;
+		int root = nthRoot(n, degree);
+		int power = pow(root, degree);
+		if (power == n) {
+			result = true;
+		}
+		return result;
+	}
+
 	/**
-	 * Tests if a number is prime using the Sieve of Eratosthenes
+	 * Tests if a number is prime.
 	 * 
 	 * @param n
 	 *            An integer
 	 * @return true if n is prime, false if n is composite
 	 */
 	public static boolean isPrime(int n) {
-		// Sieve of Eratosthenes
-		//
-
 		int sqrtN = (int) Math.sqrt(n);
 		boolean isPrime;
 		if (n == 0 || n == 1) {
@@ -272,9 +332,9 @@ public class MathUtil {
 		Collections.sort(primeFactors);
 		return primeFactors;
 	}
-	
+
 	/***
-	 * Uses Factorials
+	 * Returns the sum of n!
 	 * 
 	 * @param n
 	 *            An integer
@@ -286,17 +346,4 @@ public class MathUtil {
 			return 0;
 		return (n == 0 || n == 1) ? 1 : n * factorial(n - 1);
 	}
-
-	/*
-	 * public void simplify() { System.out.println("Radicand: " +
-	 * getRadicand()); if (!(MathUtil.isPrime(getRadicand()))) { if (getDegree()
-	 * == 0) { undefined = true; } else { //if n % nthRoot == 0; then
-	 * coefficient *= i, radicand /= i //iterate from nthRoot to 2 (lowest
-	 * possible prime factor) int nthRoot = (int) Math.pow(getRadicand(), (1.0 /
-	 * getDegree())); for (int i = nthRoot; i >= 2; i--) { if (getRadicand() % i
-	 * == 0) { setRadicand(getRadicand() / i); setCoefficient(getCoefficient() *
-	 * i); } } } }
-	 * 
-	 * }
-	 */
 }
