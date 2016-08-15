@@ -161,7 +161,6 @@ public class RadicalOperation {
 		return result;
 	}
 	
-	/*
 	public static Radical multiply(Radical r, int n) {
 		
 	}
@@ -193,5 +192,4 @@ public class RadicalOperation {
 	public static Radical divide(List<Radical> radicals) {
 
 	}
-	*/
 }
