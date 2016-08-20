@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.math.fraction.Fraction;
+import com.math.fraction.FractionFormatException;
 import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
 import com.math.radical.Radical;
 import com.math.radical.RadicalOperation;
+import com.polynomial.PolySolver;
 
 /***
  * 
@@ -78,6 +80,27 @@ public class Main {
 			System.out.println(radical);
 		}
 		
+		String fractionParseTest = "2/-4";
+		try {
+			Fraction parseTest = Fraction.parseFraction(fractionParseTest);
+			System.out.println("parsed: " + parseTest.toString());
+		} catch (FractionFormatException e) {
+			System.out.println("Not a fraction.");
+		}
+		
+		System.out.println("---");
+		List<String> solutions;
+		List<Double> decimalSolutions;
+		PolySolver solver = new PolySolver(0, 0, -48);
+		solutions = solver.getStringSolutions();
+		decimalSolutions = solver.getDecimalSolutions();
+		for (String s : solutions) {
+			System.out.println(s);
+		}
+		for (Double d : decimalSolutions) {
+			System.out.println(d);
+		}
+		
 		//System.out.println(MathUtil.nthRoot(-8, 3));
 		//System.out.println(Math.pow(-8.0, (1.0/3.0)));
 		
@@ -141,7 +164,5 @@ public class Main {
 		// removed MultiRadical, RadicalContianer, RadicalObject
 		// RadicalOperation changed from Interface to class (will be merged with
 		// MathOperations in the future)
-		
-		//last test commit
 	}
 }

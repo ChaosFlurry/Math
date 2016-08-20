@@ -1,5 +1,6 @@
 package com.math.radical;
 
+import com.math.fraction.Fraction;
 import com.math.helpers.MathUtil;
 
 /***
@@ -46,6 +47,52 @@ public class Radical {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+	
+	/**
+	 * Simplifies a Radical.
+	 * 
+	 * @param r
+	 *            The Radical to be simplified
+	 * @return A Radical equivalent to r that cannot be further simplified
+	 */
+	public Radical simplify() {
+		if (radicand == -1 && index % 2 != 0) {
+			//any odd root of -1 = -1
+			coefficient *= -1;
+			radicand = 1;
+			index = 1;
+		} else if (radicand == 1 && index != 0) {
+			//any root of 1 (except 0) = 1
+			radicand = 1;
+			index = 1;
+		} else if (radicand < 0 && index > 0 && index % 2 != 0) {
+			//any odd root of -n = -(root n)
+			coefficient *= -1;
+			radicand *= -1;
+		}
+
+		for (int i = index; i > 1; i--) {
+			if (MathUtil.hasExactNthRoot(radicand, i)) {
+				int nthRoot = MathUtil.nthRoot(radicand, i);
+				Fraction fractionalExponent = MathUtil.simplify(new Fraction(i, index));
+				radicand = MathUtil.pow(nthRoot, fractionalExponent.getNumerator());
+				index = fractionalExponent.getDenominator();
+			}
+		}
+		
+		int nthRoot = MathUtil.nthRoot(radicand, index);
+		for (int i = nthRoot; i >= 2; i--) {
+			if (radicand % MathUtil.pow(i, index) == 0) {
+				radicand /= MathUtil.pow(i, index);
+				coefficient *= i;
+			}
+		}
+		
+		// r.setCoefficient(coefficient);
+		// r.setRadicand(radicand);
+		// r.setIndex(index);
+		return new Radical(coefficient, radicand, index);
 	}
 	
 	/**
