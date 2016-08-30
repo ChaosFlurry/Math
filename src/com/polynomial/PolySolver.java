@@ -99,10 +99,11 @@ public class PolySolver {
 			combinedGCD = MathUtil.gcd(denominator, numeratorGCD);
 			discriminant.setCoefficient(discriminant.getCoefficient() / combinedGCD);
 			denominator /= combinedGCD;
-			String solution = "";
+			
 			//formatting
+			String solution = "";
 			if (-b / combinedGCD != 0) {
-				//n + 0 = n, so 0 does not need to be displayed
+				//0 does not need to be displayed as n + 0 == n
 				solution += "(";
 				solution += Integer.toString(-b / combinedGCD);
 			}

@@ -77,7 +77,7 @@ public class Fraction {
 		}
 		return new Fraction(numerator, denominator);
 	}
-
+	
 	public static Fraction parseFraction(String s) 
 			throws FractionFormatException {
 		s = s.trim();

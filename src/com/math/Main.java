@@ -9,6 +9,8 @@ import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
 import com.math.radical.Radical;
 import com.math.radical.RadicalOperation;
+import com.math.radical.RadicalOperationException;
+import com.math.radical.UndefinedRadicalException;
 import com.polynomial.PolySolver;
 
 /***
@@ -73,13 +75,6 @@ public class Main {
 		System.out.println(rt2.isZero());
 		System.out.println(rt2.isANumber());
 		
-		Radical add1 = new Radical(10000, 4);
-		Radical add2 = new Radical(100, 2);
-		List<Radical> sum = RadicalOperation.add(add1, add2);
-		for (Radical radical : sum) {
-			System.out.println(radical);
-		}
-		
 		String fractionParseTest = "2/-4";
 		try {
 			Fraction parseTest = Fraction.parseFraction(fractionParseTest);
@@ -91,7 +86,7 @@ public class Main {
 		System.out.println("---");
 		List<String> solutions;
 		List<Double> decimalSolutions;
-		PolySolver solver = new PolySolver(0, 0, -48);
+		PolySolver solver = new PolySolver(4, -40, 84);
 		solutions = solver.getStringSolutions();
 		decimalSolutions = solver.getDecimalSolutions();
 		for (String s : solutions) {
@@ -100,6 +95,18 @@ public class Main {
 		for (Double d : decimalSolutions) {
 			System.out.println(d);
 		}
+		
+		Radical exTest1 = new Radical(1, 1, 1);
+		Radical exTest2 = new Radical(0, 2, 2);
+		try {
+			Radical exResult = RadicalOperation.multiply(exTest1, exTest2);
+			System.out.println(exResult);
+		} catch (UndefinedRadicalException e) {
+			System.out.println("Undefined");
+		} catch (RadicalOperationException e) {
+			System.out.println("cannot be multiplied");
+		}
+		//test parseFraction()
 		
 		//System.out.println(MathUtil.nthRoot(-8, 3));
 		//System.out.println(Math.pow(-8.0, (1.0/3.0)));
