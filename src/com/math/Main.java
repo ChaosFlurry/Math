@@ -12,6 +12,8 @@ import com.math.radical.RadicalOperation;
 import com.math.radical.RadicalOperationException;
 import com.math.radical.UndefinedRadicalException;
 import com.polynomial.PolySolver;
+import com.polynomial.Quadratic;
+import com.polynomial.UnfactorableQuadraticException;
 
 /***
  * 
@@ -106,6 +108,19 @@ public class Main {
 		} catch (RadicalOperationException e) {
 			System.out.println("cannot be multiplied");
 		}
+		System.out.println("---");
+		
+		Quadratic factorTest = new Quadratic(0, 0, 0);
+		try {
+			List<String> factored = factorTest.factor();
+			for (String step : factored) {
+				System.out.println(step);
+			}
+		} catch (UnfactorableQuadraticException e) {
+			System.out.println(factorTest + " cannot be factored.");
+		}
+		System.out.println("---");
+		
 		//test parseFraction()
 		
 		//System.out.println(MathUtil.nthRoot(-8, 3));

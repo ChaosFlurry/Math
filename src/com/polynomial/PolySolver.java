@@ -56,6 +56,9 @@ public class PolySolver {
 		return decimalSolutions;
 	}
 	
+	//-b +- sqrt(b^2 - 4ac) / 2a
+	//simplify
+	
 	public void solve() {
 		Radical discriminant;
 		int denominator;
@@ -124,5 +127,43 @@ public class PolySolver {
 			decimalSolutions.add((-b + discriminant.decimalValue()) / denominator);
 			decimalSolutions.add((-b - discriminant.decimalValue()) / denominator);
 		}
+		
+		
+		/*
+		if (discriminant.isUndefined() || denominator == 0) {
+			stringSolutions.add("No real solutions.");
+			decimalSolutions.add(Double.NaN);
+			return;
+		}
+		
+		//split -b +- sqrt(b^2 - 4ac)/2a into -b/2a +- sqrt(b^2 - 4ac)/2a
+		
+		Fraction negativeBOver2a = new Fraction(-b, 2 * a).simplify();
+		
+		//split +- sqrt(b^2 - 4ac)/2a into (coefficient of discriminant / 2a) * rest of discriminant
+		
+		Fraction radicalCoefficientOver2a = new Fraction(discriminant.simplify().getCoefficient(), 2 * a).simplify();
+		discriminant = discriminant.simplify();
+		discriminant.setCoefficient(1);
+		
+		try {
+			Radical simplified = RadicalOperation.multiply(discriminant, radicalCoefficientOver2a.getNumerator());
+			simplified = RadicalOperation.divide(simplified, radicalCoefficientOver2a.getDenominator());
+			if (negativeBOver2a.getNumerator() == 0) {
+				if (discriminant.isZero()) {
+					stringSolutions.add(negativeBOver2a.toString());
+					decimalSolutions.add(negativeBOver2a.decimalValue());
+				} else {
+					stringSolutions.add(negativeBOver2a.toString() + "+/-" + simplified);
+					decimalSolutions.add(negativeBOver2a.decimalValue() + simplified.decimalValue());
+				}
+			}
+			
+		} catch (UndefinedRadicalException e) {
+			e.printStackTrace();
+		} catch (RadicalOperationException e) {
+			
+		}
+		 */
 	}
 }

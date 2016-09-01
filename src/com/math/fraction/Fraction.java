@@ -77,22 +77,20 @@ public class Fraction {
 		}
 		return new Fraction(numerator, denominator);
 	}
-	
-	public static Fraction parseFraction(String s) 
-			throws FractionFormatException {
-		s = s.trim();
-		Pattern number = Pattern.compile("^(-?\\d+)$");
-		Pattern fraction = Pattern.compile("^(-?\\d+)\\/(-?\\d+)$");
-		Matcher numberMatcher = number.matcher(s);
-		Matcher fractionMatcher = fraction.matcher(s);
-		
-		if (numberMatcher.find()) {
+
+	public static Fraction parseFraction(String fraction) throws FractionFormatException {
+		fraction = fraction.trim();
+		Pattern numberPattern = Pattern.compile("^(-?\\d+)$");
+		Pattern fractionPattern = Pattern.compile("^(-?\\d+)\\/(-?\\d+)$");
+		Matcher numberMatcher = numberPattern.matcher(fraction);
+		Matcher fractionMatcher = fractionPattern.matcher(fraction);
+
+		if (numberMatcher.matches()) {
 			return new Fraction(Integer.parseInt(numberMatcher.group(1)), 1);
-		} else if (fractionMatcher.find()) {
-			return new Fraction(Integer.parseInt(fractionMatcher.group(1)),
-					Integer.parseInt(fractionMatcher.group(2)));
+		} else if (fractionMatcher.matches()) {
+			return new Fraction(Integer.parseInt(fractionMatcher.group(1)), Integer.parseInt(fractionMatcher.group(2)));
 		} else {
-			throw new FractionFormatException("Invalid Fraction.");
+			throw new FractionFormatException("For input string: \"" + fraction + "\"");
 		}
 	}
 

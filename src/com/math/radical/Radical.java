@@ -167,11 +167,6 @@ public class Radical {
 		int radicand = copyOf.getRadicand();
 		int index = copyOf.getIndex();
 
-		// TODO represent special cases as an enum
-		// Special cases:
-		// When Radical is undefined, 0, 1, -1, or when Radical(x, n) == x
-		// Note: undefined * 0 = undefined
-
 		if (isUndefined()) {
 			return "Undefined";
 		} else if (radicand == 0 && index > 0) {

@@ -59,18 +59,18 @@ public class MathUtil {
 		int coefficient = r.getCoefficient();
 		int radicand = r.getRadicand();
 		int index = r.getIndex();
-		
+
 		if (radicand == -1 && index % 2 != 0) {
-			//any odd root of -1 = -1
+			// any odd root of -1 = -1
 			coefficient *= -1;
 			radicand = 1;
 			index = 1;
 		} else if (radicand == 1 && index != 0) {
-			//any root of 1 (except 0) = 1
+			// any root of 1 (except 0) = 1
 			radicand = 1;
 			index = 1;
 		} else if (radicand < 0 && index > 0 && index % 2 != 0) {
-			//any odd root of -n = -(root n)
+			// any odd root of -n = -(root n)
 			coefficient *= -1;
 			radicand *= -1;
 		}
@@ -83,7 +83,7 @@ public class MathUtil {
 				index = fractionalExponent.getDenominator();
 			}
 		}
-		
+
 		int nthRoot = MathUtil.nthRoot(radicand, index);
 		for (int i = nthRoot; i >= 2; i--) {
 			if (radicand % pow(i, index) == 0) {
@@ -91,7 +91,7 @@ public class MathUtil {
 				coefficient *= i;
 			}
 		}
-		
+
 		// r.setCoefficient(coefficient);
 		// r.setRadicand(radicand);
 		// r.setIndex(index);
@@ -144,12 +144,11 @@ public class MathUtil {
 	 * @return The greatest common denominator of a and b
 	 */
 	public static int gcd(int a, int b) {
-		// TODO: Refactor as a reciprocal function
-
-		// Euclidean algorithm
-		// gcd(a, b) == gcd(a % b, b)
-		// when a or b == 0, the gcd is the non-zero value
-		// (which is also the sum of a and b)
+		a = Math.abs(a);
+		b = Math.abs(b);
+		// TODO batch gcd
+		// TODO use divisors to find divisors of a and b then find the largest
+		// value in the list shared by a and b
 
 		int gcd;
 		if (a == b) {
@@ -338,7 +337,7 @@ public class MathUtil {
 	 * 
 	 * @param n
 	 *            An integer
-	 * @return 0 if n is negative, n! elsewise.
+	 * @return 0 if n is negative, n! otherwise.
 	 */
 	// http://nntdm.net/papers/nntdm-19/NNTDM-19-2-30_42.pdf
 	public static int factorial(int n) {
