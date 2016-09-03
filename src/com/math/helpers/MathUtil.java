@@ -345,4 +345,27 @@ public class MathUtil {
 			return 0;
 		return (n == 0 || n == 1) ? 1 : n * factorial(n - 1);
 	}
+	
+	/**
+	 * TODO update this javadoc Returns a normalized String of a term of a
+	 * polynomial that is ready to be printed. Instead of ...+1x method will
+	 * return ... +x -1x will return -x etc.
+	 * 
+	 * @param n
+	 *            An integer
+	 * @return A string that does not need to be further formatted to be printed
+	 */
+	public static String signFormatted(int n) {
+		// default case 0
+		String result = "";
+		if (n == 1)
+			result = "+";
+		else if (n > 1)
+			result = "+" + Integer.toString(n);
+		else if (n == -1)
+			result = "-";
+		else if (n < -1)
+			result = Integer.toString(n);
+		return result;
+	}
 }

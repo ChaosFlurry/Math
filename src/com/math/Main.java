@@ -1,7 +1,12 @@
 package com.math;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.math.fraction.Fraction;
 import com.math.fraction.FractionFormatException;
@@ -11,8 +16,11 @@ import com.math.radical.Radical;
 import com.math.radical.RadicalOperation;
 import com.math.radical.RadicalOperationException;
 import com.math.radical.UndefinedRadicalException;
+import com.polynomial.LinearEquation;
+import com.polynomial.Point;
 import com.polynomial.PolySolver;
 import com.polynomial.Quadratic;
+import com.polynomial.QuadraticFormatException;
 import com.polynomial.UnfactorableQuadraticException;
 
 /***
@@ -23,6 +31,7 @@ import com.polynomial.UnfactorableQuadraticException;
 @SuppressWarnings("all")
 public class Main {
 	// TODO Unit Tests for simplify()
+	// TODO scientific notation?
 	public static void main(String[] args) {
 		Fraction f0 = new Fraction(10, 4);
 
@@ -110,16 +119,47 @@ public class Main {
 		}
 		System.out.println("---");
 		
-		Quadratic factorTest = new Quadratic(0, 0, 0);
+		PolySolver factorTest = new PolySolver(0, 0, 0);
 		try {
 			List<String> factored = factorTest.factor();
 			for (String step : factored) {
-				System.out.println(step);
+				//System.out.println(step);
 			}
 		} catch (UnfactorableQuadraticException e) {
 			System.out.println(factorTest + " cannot be factored.");
 		}
 		System.out.println("---");
+		
+		String qParse = "2x^2+2x+1";
+		String qParse2 = "x^2+x+1";
+		String qParse3 = "x^2+1";
+		Quadratic parseTest;
+		try {
+			parseTest = Quadratic.parseQuadratic(qParse3);
+			System.out.println(parseTest);
+			System.out.println(parseTest.getA());
+			System.out.println(parseTest.getB());
+			System.out.println(parseTest.getC());
+		} catch (QuadraticFormatException e) {
+			e.printStackTrace();
+		}
+		System.out.println("---");
+		
+		Point px = new Point(1, 1);
+		Point py = new Point(2, 2);
+		LinearEquation xy = new LinearEquation(px, py);
+
+		System.out.println(xy.getSlope());
+		System.out.println(xy.getYIntercept());
+		System.out.println(xy.getXIntercept());
+		System.out.println(xy);
+		
+		TreeSet<Point> values = xy.tableOfValues(-1, 1, 0.001);
+		System.out.println(xy.f(-98));
+		for (Point p : values) {
+			System.out.println(p);
+		}
+
 		
 		//test parseFraction()
 		
