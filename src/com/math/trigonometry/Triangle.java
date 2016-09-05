@@ -1,4 +1,4 @@
-package com.trigonometry;
+package com.math.trigonometry;
 
 public class Triangle {
 	double a;

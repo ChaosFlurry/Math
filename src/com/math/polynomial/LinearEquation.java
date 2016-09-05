@@ -1,8 +1,6 @@
-package com.polynomial;
+package com.math.polynomial;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +10,7 @@ public class LinearEquation {
 	double xIntercept;
 	double yIntercept;
 	
-	MathContext rounding = new MathContext(34, RoundingMode.HALF_UP);
+	//TODO use BigDecimal to preserve precision, use double.inf and double.nan to check for vertical/horizontal slopes
 
 	public LinearEquation(double slope, double yIntercept) {
 		this.slope = slope;
@@ -31,14 +29,14 @@ public class LinearEquation {
 	public LinearEquation(double slope, Point p) {
 		if (Double.valueOf(slope).isInfinite()) {
 			this.yIntercept = Double.NaN;
-			this.xIntercept = p.getX();
+			this.xIntercept = p.getDoubleX();
 		} else if (slope == 0) {
-			this.yIntercept = p.getY();
+			this.yIntercept = p.getDoubleY();;
 			this.xIntercept = Double.NaN;
 		} else {
 			this.slope = slope;
-			this.yIntercept = slope * -p.getX() + p.getY();
-			this.xIntercept = -p.getY() / slope + p.getX();
+			this.yIntercept = slope * -p.getDoubleX() + p.getDoubleX();
+			this.xIntercept = -p.getDoubleX() / slope + p.getDoubleX();
 		}
 	}
 
@@ -46,13 +44,13 @@ public class LinearEquation {
 		this.slope = slopeOf(p1, p2);
 		if (Double.valueOf(slope).isInfinite()) {
 			this.yIntercept = Double.NaN;
-			this.xIntercept = p1.getX();
+			this.xIntercept = p1.getDoubleX();
 		} else if (slope == 0) {
-			this.yIntercept = p1.getY();
+			this.yIntercept = p1.getDoubleY();
 			this.xIntercept = Double.NaN;
 		} else {
-			this.yIntercept = slope * -p1.getX() + p1.getY();
-			this.xIntercept = -p1.getY() / slope + p1.getX();
+			this.yIntercept = slope * -p1.getDoubleX() + p1.getDoubleY();
+			this.xIntercept = -p1.getDoubleY() / slope + p1.getDoubleX();
 		}
 	}
 
@@ -113,12 +111,27 @@ public class LinearEquation {
 		return (slope.multiply(d).add(yIntercept)).doubleValue();
 	}
 	
-	public double f(BigDecimal x) {
+	public BigDecimal f(BigDecimal x) {
 		BigDecimal slope = BigDecimal.valueOf(this.slope);
 		BigDecimal yIntercept = BigDecimal.valueOf(this.yIntercept);
-		return (slope.multiply(x).add(yIntercept)).doubleValue();
+		return slope.multiply(x).add(yIntercept);
 	}
 
+	public TreeSet<Point> tableOfValues(BigDecimal min, BigDecimal max, BigDecimal step) {
+		min = min.min(max);
+		max = max.max(min);
+		TreeSet<Point> values = new TreeSet<Point>(new PointComparator());
+
+		if (step.compareTo(BigDecimal.ZERO) == 0 || min.compareTo(max) == 0) {
+			values.add(new Point(min, f(min)));
+		} else {
+			for (BigDecimal x = min; x.compareTo(max) <= 0; x = x.add(step)) {
+				values.add(new Point(x, f(x)));
+			}
+		}
+		return values;
+	}
+	
 	public TreeSet<Point> tableOfValues(double min, double max, double step) {
 		BigDecimal a = BigDecimal.valueOf(Math.min(min, max));
 		BigDecimal b = BigDecimal.valueOf(Math.max(min, max));
@@ -128,8 +141,8 @@ public class LinearEquation {
 		if (step == 0 || (min == max)) {
 			values.add(new Point(min, f(min)));
 		} else {
-			for (BigDecimal x = a; x.compareTo(b) < 0; x = x.add(s)) {
-				values.add(new Point(x.doubleValue(), f(x)));
+			for (BigDecimal x = a; x.compareTo(b) <= 0; x = x.add(s)) {
+				values.add(new Point(x, f(x)));
 			}
 		}
 		return values;
@@ -173,10 +186,10 @@ public class LinearEquation {
 	 * @return
 	 */
 	public static double slopeOf(Point p1, Point p2) {
-		double x1 = p1.getX();
-		double y1 = p1.getY();
-		double x2 = p2.getX();
-		double y2 = p2.getY();
+		double x1 = p1.getDoubleX();
+		double y1 = p1.getDoubleY();
+		double x2 = p2.getDoubleX();
+		double y2 = p2.getDoubleY();
 		return (y2 - y1) / (x2 - x1);
 	}
 
@@ -191,6 +204,14 @@ public class LinearEquation {
 	 * @return
 	 */
 	public static double slopeOf(double x1, double y1, double x2, double y2) {
-		return (y2 - y1) / (x2 - x1);
+		if (BigDecimal.valueOf(y2).subtract(BigDecimal.valueOf(y1)).compareTo(BigDecimal.ZERO) == 0) {
+			if (BigDecimal.valueOf(x2).subtract(BigDecimal.valueOf(x1)).compareTo(BigDecimal.ZERO) == 0) {
+				return Double.NaN;
+			}
+			return Double.POSITIVE_INFINITY;
+		} else {
+			//(y2 - y1) / (x2 - x1)
+			return BigDecimal.valueOf(y2).subtract(BigDecimal.valueOf(y1)).divide(BigDecimal.valueOf(x2).subtract(BigDecimal.valueOf(x1))).doubleValue();
+		}
 	}
 }

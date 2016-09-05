@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 public class PointFormatException extends Exception{
 	private static final long serialVersionUID = 1L;

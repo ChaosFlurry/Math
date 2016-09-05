@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;

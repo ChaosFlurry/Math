@@ -12,16 +12,17 @@ import com.math.fraction.Fraction;
 import com.math.fraction.FractionFormatException;
 import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
+import com.math.matrix.Matrix;
+import com.math.polynomial.LinearEquation;
+import com.math.polynomial.Point;
+import com.math.polynomial.PolySolver;
+import com.math.polynomial.Quadratic;
+import com.math.polynomial.QuadraticFormatException;
+import com.math.polynomial.UnfactorableQuadraticException;
 import com.math.radical.Radical;
 import com.math.radical.RadicalOperation;
 import com.math.radical.RadicalOperationException;
 import com.math.radical.UndefinedRadicalException;
-import com.polynomial.LinearEquation;
-import com.polynomial.Point;
-import com.polynomial.PolySolver;
-import com.polynomial.Quadratic;
-import com.polynomial.QuadraticFormatException;
-import com.polynomial.UnfactorableQuadraticException;
 
 /***
  * 
@@ -154,12 +155,66 @@ public class Main {
 		System.out.println(xy.getXIntercept());
 		System.out.println(xy);
 		
-		TreeSet<Point> values = xy.tableOfValues(-1, 1, 0.001);
+		TreeSet<Point> values = xy.tableOfValues(-0.001, 0.001, 0.0001);
 		System.out.println(xy.f(-98));
 		for (Point p : values) {
 			System.out.println(p);
 		}
-
+		
+		int[] array = new int[3];
+		int[] a = {1, 2, 3, 4};
+		array = a;
+		for (int i = 0; i < a.length; i++) {
+			System.out.println(a[i]);
+		}
+		
+		int[][] mArray = new int[2][3];
+		for (int i = 0; i < mArray.length; i++) {
+			for (int j = 0; j < mArray[i].length; j++) {
+				mArray[i][j] = (i + 1) * 10 + j + 1;
+				System.out.println("i:" + i + ", j:" + j + " " + Integer.toString(mArray[i][j]));
+			}
+		}
+		
+		int[][] mArray2 = new int[2][3];
+		for (int i = 0; i < mArray2.length; i++) {
+			for (int j = 0; j < mArray2[i].length; j++) {
+				mArray2[i][j] = (i + 1) * 20 + (j + 1) * 2;
+				System.out.println("i:" + i + ", j:" + j + " " + Integer.toString(mArray2[i][j]));
+			}
+		}
+		
+		Matrix m = new Matrix(2, 3, mArray);
+		System.out.println("rows: " + m.getNumberOfRows());
+		System.out.println("columns: " + m.getNumberOfColumns());
+		
+		Fraction[][] initial = m.getElements();
+		System.out.println("initial: " );
+		for (int i = 0; i < initial.length; i++) {
+			for (int j = 0; j < initial[i].length; j++) {
+				System.out.println("i:" + i + ", j:" + j + " " + initial[i][j]);
+			}
+		}
+		
+		m.setMatrixDimensions(3, 2);
+		m.setElements(mArray2);
+		
+		Fraction[][] returned = m.getElements();
+		System.out.println("rows: " + m.getNumberOfRows());
+		System.out.println("columns: " + m.getNumberOfColumns());
+		
+		System.out.println("returned: " );
+		for (int i = 0; i < returned.length; i++) {
+			for (int j = 0; j < returned[i].length; j++) {
+				System.out.println("i:" + i + ", j:" + j + " " + returned[i][j]);
+			}
+		}
+		
+		//TODO List:
+		//SYSTEMS***
+		//conversions?
+		//Triangle solver
+		//sin/cos law
 		
 		//test parseFraction()
 		

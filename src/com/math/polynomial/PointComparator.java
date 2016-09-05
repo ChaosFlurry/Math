@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 import java.util.Comparator;
 

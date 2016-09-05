@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class PolySolver {
 			denominator /= combinedGCD;
 
 			stringSolutions.add(new Fraction(numerator, denominator).simplify().toString());
-			decimalSolutions.add(new Fraction(numerator, denominator).decimalValue());
+			decimalSolutions.add(new Fraction(numerator, denominator).doubleValue());
 
 			// negative case
 			if (discriminant.isZero() == false) {
@@ -93,7 +93,7 @@ public class PolySolver {
 				numerator /= combinedGCD;
 				denominator /= combinedGCD;
 				stringSolutions.add(new Fraction(numerator, denominator).simplify().toString());
-				decimalSolutions.add(new Fraction(numerator, denominator).decimalValue());
+				decimalSolutions.add(new Fraction(numerator, denominator).doubleValue());
 			}
 		} else if (discriminant.isUndefined() == false) {
 			discriminant = discriminant.simplify();
@@ -346,7 +346,7 @@ public class PolySolver {
 		return steps;
 	}
 
-	//uses csq
+	//uses csq *INCOMPLETE*
 	public String vertexForm() throws QuadraticFormatException {
 		if (a == 0)
 			throw new QuadraticFormatException("\"" + this + "\" cannot be converted into vertex form");
@@ -355,7 +355,7 @@ public class PolySolver {
 		return vertexForm;
 	}
 	
-	// TODO complete isFactorable()
+	// TODO complete isFactorable() *INCOMPLETE*
 		public boolean isFactorable() {
 			boolean result = false;
 			return result;

@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -227,7 +227,7 @@ public class Quadratic {
 		if (step.compareTo(BigDecimal.ZERO) == 0 || min.compareTo(max) == 0) {
 			values.add(new Point(min, f(min)));
 		} else {
-			for (BigDecimal x = min; x.compareTo(max) < 0; x = x.add(step)) {
+			for (BigDecimal x = min; x.compareTo(max) <= 0; x = x.add(step)) {
 				values.add(new Point(x, f(x)));
 			}
 		}
@@ -243,7 +243,7 @@ public class Quadratic {
 		if (step == 0 || (min == max)) {
 			values.add(new Point(a, f(a)));
 		} else {
-			for (BigDecimal x = a; x.compareTo(b) < 0; x = x.add(s)) {
+			for (BigDecimal x = a; x.compareTo(b) <= 0; x = x.add(s)) {
 				values.add(new Point(x, f(x)));
 			}
 		}

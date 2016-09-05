@@ -1,4 +1,4 @@
-package com.polynomial;
+package com.math.polynomial;
 
 public class UnfactorableQuadraticException extends Exception {
 	private static final long serialVersionUID = 1L;
