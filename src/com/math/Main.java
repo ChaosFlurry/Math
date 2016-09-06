@@ -196,7 +196,7 @@ public class Main {
 			}
 		}
 		
-		m.setMatrixDimensions(3, 2);
+		m.setMatrixDimensions(5, 5);
 		m.setElements(mArray2);
 		
 		Fraction[][] returned = m.getElements();
@@ -208,6 +208,10 @@ public class Main {
 			for (int j = 0; j < returned[i].length; j++) {
 				System.out.println("i:" + i + ", j:" + j + " " + returned[i][j]);
 			}
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			System.out.println(i);
 		}
 		
 		//TODO List:

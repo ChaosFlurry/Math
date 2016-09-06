@@ -5,23 +5,15 @@ import java.util.Arrays;
 import com.math.fraction.Fraction;
 
 public class Matrix {
-	// add and multiply matrix
-	// https://en.wikipedia.org/wiki/Matrix_addition
-	// https://en.wikipedia.org/wiki/Scalar_multiplication
-	//
-	// transpositions of matrices
-	// https://en.wikipedia.org/wiki/Transpose
-	//
-	// create blank (all zero) matrix of x by y collumns and r-ows?
-	// converting an int matrix to fraction matrix
+	// transposition of matrices
+	// create blank (all zero) matrix of x by y columns and rows?
 	// parsing a matrix
 	// printing a matrix
-
-	// modifications of individual rows/columns
-	// division (multiply by inverse)
 	// comparison of matrices
 	// inverse of matrices
 	// determinants of matrices
+
+	// TODO have more descriptive IllegalArgumentException messages
 
 	int rows;
 	int columns;
@@ -110,7 +102,11 @@ public class Matrix {
 
 		// add int elements to a temporary array
 		for (int i = 0; i < rows; i++) {
-			intElements[i] = Arrays.copyOf(elements[i], columns);
+			try {
+				intElements[i] = Arrays.copyOf(elements[i], columns);
+			} catch (IndexOutOfBoundsException ex) {
+				intElements[i] = blank;
+			}
 		}
 
 		// convert ints to fractions, transfer values to fraction array
@@ -129,7 +125,8 @@ public class Matrix {
 		if (row > this.rows || column > this.columns) {
 			throw new IllegalArgumentException("Invalid matrix dimensions");
 		}
-		return elements[row][column];
+		// arrays are zero-indexed
+		return elements[row - 1][column - 1];
 	}
 
 	public void set(int row, int column, Fraction element) {
@@ -140,7 +137,8 @@ public class Matrix {
 		if (row > this.rows || column > this.columns) {
 			throw new IllegalArgumentException("Invalid matrix dimensions");
 		}
-		elements[row][column] = element.simplify();
+		// arrays are zero-indexed
+		elements[row - 1][column - 1] = element.simplify();
 	}
 
 	public void set(int row, int column, int element) {
@@ -151,7 +149,56 @@ public class Matrix {
 		if (row > this.rows || column > this.columns) {
 			throw new IllegalArgumentException("Invalid matrix dimensions");
 		}
-		elements[row][column] = Fraction.valueOf(element).simplify();
+		// arrays are zero-indexed
+		elements[row - 1][column - 1] = Fraction.valueOf(element).simplify();
+	}
+
+	public Fraction[] getRow(int row) {
+		if (row <= 0 || row > rows) {
+			throw new IllegalArgumentException("Invalid matrix dimensions");
+		}
+		// arrays are zero-indexed
+		return elements[row - 1];
+	}
+
+	public void setRow(int row, Fraction[] elements) {
+		if (row <= 0 || row > rows) {
+			throw new IllegalArgumentException("Invalid matrix dimensions");
+		}
+
+		if (elements.length != columns) {
+			throw new IllegalArgumentException("Invalid matrix dimensions");
+		}
+		// arrays are zero-indexed
+		this.elements[row - 1] = elements;
+	}
+
+	public Fraction[] getColumn(int column) {
+		if (column <= 0 || column > columns) {
+			throw new IllegalArgumentException("Invalid matrix Dimensions");
+		}
+
+		// number of elements in a column == number of rows
+		Fraction[] result = new Fraction[rows];
+		for (int i = 0; i < rows; i++) {
+			// arrays are zero-indexed
+			result[i] = elements[i][column - 1];
+		}
+		return result;
+	}
+
+	public void setColumn(int column, Fraction[] elements) {
+		if (column <= 0 || column > columns) {
+			throw new IllegalArgumentException("Invalid matrix Dimensions");
+		}
+
+		if (elements.length != rows) {
+			throw new IllegalArgumentException("Invalid matrix dimensions");
+		}
+
+		for (int i = 0; i < rows; i++) {
+			set(i, column, elements[i]);
+		}
 	}
 
 	public Matrix add(int n) {
@@ -162,6 +209,7 @@ public class Matrix {
 		int rows = m.getNumberOfRows();
 		int columns = m.getNumberOfColumns();
 		Fraction[][] elements = m.getElements();
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; i < columns; j++) {
 				elements[i][j] = Fraction.add(elements[i][j], n).simplify();
@@ -178,6 +226,7 @@ public class Matrix {
 		int rows = m.getNumberOfRows();
 		int columns = m.getNumberOfColumns();
 		Fraction[][] elements = m.getElements();
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; i < columns; j++) {
 				elements[i][j] = Fraction.add(elements[i][j], f).simplify();
@@ -187,11 +236,36 @@ public class Matrix {
 	}
 
 	public Matrix add(Matrix m) {
-
+		return add(this, m);
 	}
 
 	public static Matrix add(Matrix m1, Matrix m2) {
+		if (m1.getNumberOfRows() != m2.getNumberOfRows() || m1.getNumberOfColumns() != m2.getNumberOfColumns()) {
+			throw new IllegalArgumentException("Matrix dimensions do not match");
+		}
 
+		int rows = m1.getNumberOfRows();
+		int columns = m1.getNumberOfColumns();
+		Fraction[][] result = new Fraction[rows][columns];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				result[i][j] = Fraction.add(m1.get(i, j), m2.get(i, j));
+			}
+		}
+		return new Matrix(rows, columns, result);
+	}
+
+	public static Fraction[] add(Fraction[] a, Fraction[] b) {
+		if (a.length != b.length) {
+			throw new IllegalArgumentException("Array lengths are not the same");
+		}
+
+		Fraction[] result = new Fraction[a.length];
+		for (int i = 0; i < a.length; i++) {
+			result[i] = a[i].add(b[i]);
+		}
+		return result;
 	}
 
 	public Matrix subtract(int n) {
@@ -202,6 +276,7 @@ public class Matrix {
 		int rows = m.getNumberOfRows();
 		int columns = m.getNumberOfColumns();
 		Fraction[][] elements = m.getElements();
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; i < columns; j++) {
 				elements[i][j] = Fraction.subtract(elements[i][j], n).simplify();
@@ -227,11 +302,24 @@ public class Matrix {
 	}
 
 	public Matrix subtract(Matrix m) {
-
+		return subtract(this, m);
 	}
 
 	public static Matrix subtract(Matrix m1, Matrix m2) {
+		if (m1.getNumberOfRows() != m2.getNumberOfRows() || m1.getNumberOfColumns() != m2.getNumberOfColumns()) {
+			throw new IllegalArgumentException("Matrix dimensions do not match");
+		}
 
+		int rows = m1.getNumberOfRows();
+		int columns = m1.getNumberOfColumns();
+		Fraction[][] result = new Fraction[rows][columns];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				result[i][j] = Fraction.subtract(m1.get(i, j), m2.get(i, j));
+			}
+		}
+		return new Matrix(rows, columns, result);
 	}
 
 	public Matrix multiply(int n) {
@@ -242,6 +330,7 @@ public class Matrix {
 		int rows = m.getNumberOfRows();
 		int columns = m.getNumberOfColumns();
 		Fraction[][] elements = m.getElements();
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; i < columns; j++) {
 				elements[i][j] = Fraction.multiply(elements[i][j], n).simplify();
@@ -258,6 +347,7 @@ public class Matrix {
 		int rows = m.getNumberOfRows();
 		int columns = m.getNumberOfColumns();
 		Fraction[][] elements = m.getElements();
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; i < columns; j++) {
 				elements[i][j] = Fraction.add(elements[i][j], f).simplify();
@@ -267,58 +357,77 @@ public class Matrix {
 	}
 
 	public Matrix multiply(Matrix m) {
-
+		return multiply(this, m);
 	}
 
 	public static Matrix multiply(Matrix m1, Matrix m2) {
+		int rows = m1.getNumberOfRows();
+		int columns = m2.getNumberOfColumns();
 
-	}
+		if (rows != columns) {
+			throw new IllegalArgumentException("Matrices cannot be multiplied");
+		}
 
-	public Matrix divide(int n) {
-		return divide(this, n);
-	}
-
-	public static Matrix divide(Matrix m, int n) {
-		int rows = m.getNumberOfRows();
-		int columns = m.getNumberOfColumns();
-		Fraction[][] elements = m.getElements();
+		Fraction[][] elements = new Fraction[rows][columns];
 		for (int i = 0; i < rows; i++) {
-			for (int j = 0; i < columns; j++) {
-				elements[i][j] = Fraction.divide(elements[i][j], n).simplify();
+			for (int j = 0; j < columns; j++) {
+				elements[i][j] = Matrix.multiply(m1.getColumn(i), m2.getRow(j));
 			}
 		}
 		return new Matrix(rows, columns, elements);
 	}
 
-	public Matrix divide(Fraction f) {
-		return divide(this, f);
-	}
-
-	public static Matrix divide(Matrix m, Fraction f) {
-		int rows = m.getNumberOfRows();
-		int columns = m.getNumberOfColumns();
-		Fraction[][] elements = m.getElements();
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; i < columns; j++) {
-				elements[i][j] = Fraction.add(elements[i][j], f).simplify();
-			}
+	public static Fraction multiply(Fraction[] a, Fraction[] b) {
+		if (a.length != b.length) {
+			throw new IllegalArgumentException("Array lengths do not match");
 		}
-		return new Matrix(rows, columns, elements);
+
+		if (a.length == 0 || b.length == 0) {
+			return new Fraction(0, 1);
+		}
+		Fraction result = new Fraction(0, 1);
+		for (int i = 0; i < a.length; i++) {
+			result = Fraction.add(result, Fraction.multiply(a[i], b[i]));
+		}
+		return result;
 	}
 
-	public Matrix divide(Matrix m) {
-
+	public static Fraction sum(Fraction[] a) {
+		if (a.length == 0) {
+			return new Fraction(0, 1);
+		}
+		return Fraction.add(a);
 	}
 
-	public static Matrix divide(Matrix m1, Matrix m2) {
+	public boolean hasInverse() {
+		return hasInverse(this);
+	}
 
+	public static boolean hasInverse(Matrix m) {
+		// only square matrices have an inverse
+		if (m.getNumberOfRows() != m.getNumberOfColumns()) {
+			return false;
+		}
+		// if the determinant of a square matrix is 0 it is singular
+		if (determinant(m).equals(new Fraction(0, 1))) {
+			return false;
+		}
+		return true;
 	}
 
 	public Matrix inverse() {
-
+		return inverse(this);
 	}
 
 	public static Matrix inverse(Matrix m) {
+
+	}
+
+	public Fraction determinant() {
+
+	}
+
+	public static Fraction determinant(Matrix m) {
 
 	}
 }

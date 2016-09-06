@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.math.helpers.MathOperation;
 import com.math.helpers.MathUtil;
 
 /***
@@ -43,26 +42,25 @@ public class Fraction {
 		return (numerator == 0) ? "0" : numerator + "/" + denominator;
 	}
 
-	/**
-	 * Returns a Fraction in its lowest terms. A fraction cannot be further
-	 * simplified when its numerator or denominator is prime or 1. If the
-	 * denominator of a fraction is negative, it is changed to positive.
-	 * 
-	 * @param f
-	 *            The Fraction to be simplified
-	 * @return A Fraction in lowest terms equivalent to f
-	 */
-	public Fraction simplify() {
-		int numerator = this.numerator;
-		int denominator = this.denominator;
-		int gcd = MathUtil.gcd(numerator, denominator);
-		numerator = (numerator / gcd);
-		denominator = (denominator / gcd);
-		if (denominator < 0) {
-			numerator *= -1;
-			denominator *= -1;
+	public boolean equals(Fraction f) {
+		return equals(this, f);
+	}
+
+	public static boolean equals(Fraction f1, Fraction f2) {
+		int f1n = f1.simplify().getNumerator();
+		int f2n = f2.simplify().getNumerator();
+		int f1d = f1.simplify().getDenominator();
+		int f2d = f2.simplify().getDenominator();
+		
+		//if numerators and denominators match
+		if (f1n == f2n && f1d == f2d) {
+			return true;
 		}
-		return new Fraction(numerator, denominator);
+		return false;
+	}
+
+	public Fraction simplify() {
+		return simplify(this);
 	}
 
 	/**
@@ -78,6 +76,7 @@ public class Fraction {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 		int gcd = MathUtil.gcd(numerator, denominator);
+
 		numerator = (numerator / gcd);
 		denominator = (denominator / gcd);
 		if (denominator < 0) {
@@ -148,7 +147,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator + n * denominator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -176,7 +175,7 @@ public class Fraction {
 		int denominator = f1d * (f2d / gcd);
 
 		Fraction result = new Fraction(numerator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -190,7 +189,7 @@ public class Fraction {
 	public static Fraction add(Fraction... fractions) {
 		Fraction result = new Fraction(0, 1);
 		for (Fraction f : fractions) {
-			result = MathOperation.add(result, f);
+			result = Fraction.add(result, f);
 		}
 		return result;
 	}
@@ -205,7 +204,7 @@ public class Fraction {
 	public static Fraction add(List<Fraction> fractions) {
 		Fraction result = new Fraction(0, 1);
 		for (Fraction f : fractions) {
-			result = MathOperation.add(result, f);
+			result = Fraction.add(result, f);
 		}
 		return result;
 	}
@@ -228,7 +227,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator - n * denominator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -256,7 +255,7 @@ public class Fraction {
 		int denominator = f1d * (f2d / gcd);
 
 		Fraction result = new Fraction(numerator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -306,8 +305,9 @@ public class Fraction {
 	public static Fraction multiply(Fraction f, int n) {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
+
 		Fraction result = new Fraction(numerator * n, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -334,7 +334,7 @@ public class Fraction {
 		int denominator = f1d * f2d;
 
 		Fraction result = new Fraction(numerator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -393,11 +393,12 @@ public class Fraction {
 		if (n == 0) {
 			throw new ArithmeticException("Division by 0");
 		}
+
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator, denominator * n);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -428,7 +429,7 @@ public class Fraction {
 		}
 
 		Fraction result = new Fraction(numerator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 
@@ -470,7 +471,7 @@ public class Fraction {
 				throw new ArithmeticException("Division by 0");
 			}
 		}
-		
+
 		if (fractions.size() == 0) {
 			return new Fraction(0, 1);
 		}
@@ -500,7 +501,7 @@ public class Fraction {
 		int denominator = (int) Math.pow(f.getDenominator(), n);
 
 		Fraction result = new Fraction(numerator, denominator);
-		MathUtil.simplify(result);
+		Fraction.simplify(result);
 		return result;
 	}
 }
