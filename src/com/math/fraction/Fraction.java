@@ -12,9 +12,11 @@ import com.math.helpers.MathUtil;
  *
  */
 public class Fraction {
-
 	int numerator;
 	int denominator;
+	
+	public static final Fraction ONE = new Fraction(1, 1);
+	public static final Fraction ZERO = new Fraction(0, 1);
 
 	public Fraction(int numerator, int denominator) {
 		if (denominator == 0) {
@@ -503,5 +505,16 @@ public class Fraction {
 		Fraction result = new Fraction(numerator, denominator);
 		Fraction.simplify(result);
 		return result;
+	}
+	
+	public Fraction reciprocal() {
+		return reciprocal(this);
+	}
+	
+	public static Fraction reciprocal(Fraction f) {
+		if (f.simplify().equals(Fraction.ZERO)) {
+			throw new ArithmeticException("division by 0");
+		}
+		return new Fraction(f.simplify().getDenominator(), f.simplify().getNumerator());
 	}
 }
