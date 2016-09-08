@@ -421,14 +421,14 @@ public class Matrix {
 	}
 
 	public static Matrix inverse(Matrix m) {
-
+		return null;
 	}
 
 	public Fraction determinant() {
-
+		return null;
 	}
 
 	public static Fraction determinant(Matrix m) {
-
+		return null;
 	}
 }

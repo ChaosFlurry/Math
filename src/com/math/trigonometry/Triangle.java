@@ -1,7 +1,9 @@
 package com.math.trigonometry;
 
 public class Triangle {
-	double a;
-	double b;
-	double c;
+	public double a;
+	public double b;
+	public double c;
+	
+	
 }
