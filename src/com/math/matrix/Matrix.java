@@ -79,7 +79,7 @@ public class Matrix {
 
 	public void setElements(Fraction[][] elements) {
 		this.elements = new Fraction[rows][columns];
-		
+
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				try {
@@ -206,27 +206,27 @@ public class Matrix {
 			set(i + 1, column + 1, elements[i]);
 		}
 	}
-	
+
 	public void swapRow(int r1, int r2) {
 		if (r1 < 1 || r2 < 1 || r1 > rows || r2 > rows) {
 			throw new IllegalArgumentException("Beyond row dimensions");
 		}
-		
+
 		Fraction[] temp = getRow(r1);
 		setRow(r1, getRow(r2));
 		setRow(r2, temp);
 	}
-	
+
 	public void swapColumn(int c1, int c2) {
 		if (c1 < 1 || c2 < 1 || c1 > columns || c2 > columns) {
 			throw new IllegalArgumentException("Beyond column dimensions");
 		}
-		
+
 		Fraction[] temp = getColumn(c1);
 		setRow(c1, getColumn(c2));
 		setRow(c2, temp);
 	}
-	
+
 	public Fraction[] addRow(int r1, int r2) {
 		if (r1 < 1 || r1 > rows) {
 			throw new IllegalArgumentException("Invalid row");
@@ -234,14 +234,14 @@ public class Matrix {
 		if (r2 < 1 || r2 > rows) {
 			throw new IllegalArgumentException("Invalid row");
 		}
-		
+
 		Fraction[] result = new Fraction[columns];
 		for (int i = 0; i < columns; i++) {
 			result[i] = elements[r1 - 1][i].add(elements[r2 - 1][i]).simplify();
 		}
 		return result;
 	}
-	
+
 	public Fraction[] subtractRow(int r1, int r2) {
 		if (r1 < 1 || r1 > rows) {
 			throw new IllegalArgumentException("Invalid row");
@@ -249,31 +249,31 @@ public class Matrix {
 		if (r2 < 1 || r2 > rows) {
 			throw new IllegalArgumentException("Invalid row");
 		}
-		
+
 		Fraction[] result = new Fraction[columns];
 		for (int i = 0; i < columns; i++) {
 			result[i] = elements[r1 - 1][i].subtract(elements[r2 - 1][i]).simplify();
 		}
 		return result;
 	}
-	
+
 	public Fraction[] multiplyRow(int row, Fraction f) {
 		if (row < 1 || row > rows) {
 			throw new IllegalArgumentException("Invalid row");
 		}
-		
+
 		Fraction[] result = new Fraction[rows];
 		for (int i = 0; i < rows; i++) {
 			result[i] = elements[row - 1][i].multiply(f).simplify();
 		}
 		return result;
 	}
-	
+
 	public Fraction[] multiplyColumn(int column, Fraction f) {
 		if (column < 1 || column > columns) {
 			throw new IllegalArgumentException("Invalid row");
 		}
-		
+
 		Fraction[] result = new Fraction[rows];
 		for (int i = 0; i < rows; i++) {
 			result[i] = elements[i][column - 1].multiply(f).simplify();
@@ -552,18 +552,18 @@ public class Matrix {
 		if (rows != columns) {
 			throw new IllegalArgumentException("Matrix is singular");
 		}
-		
-		//1 = positive, -1 = negative
+
+		// 1 = positive, -1 = negative
 		int sign = 1;
 		int pivotRow = 0;
 		int pivotColumn = 0;
-		
+
 		Fraction[][] elements = m.getElements();
-		
+
 		// TODO matrix sizes 2 x 2 and 1 x 1 handled manually
 		// TODO fix issues with row swaps
-		
-		//set pivot
+
+		// set pivot
 		for (int c = pivotColumn; c < columns; c++) {
 			Fraction[] column = new Fraction[columns - pivotColumn];
 			int count = 0;
@@ -571,7 +571,7 @@ public class Matrix {
 				column[count] = elements[i][c];
 				count++;
 			}
-			
+
 			boolean allColumnValuesAreZero = true;
 			for (int i = 0; i < column.length; i++) {
 				if (column[i].equals(Fraction.ZERO) == false) {
@@ -579,16 +579,15 @@ public class Matrix {
 					break;
 				}
 			}
-			
+
 			if (allColumnValuesAreZero) {
 				continue;
 			}
-			
-			//set pivot
+
+			// set pivot
 			Fraction pivot = elements[pivotRow][pivotColumn];
-			System.out.println(pivot);
-			
-			//swap rows
+
+			// swap rows
 			if (pivot.equals(Fraction.ZERO)) {
 				for (int i = pivotRow + 1; i < rows; i++) {
 					if (elements[i][pivotColumn].equals(Fraction.ZERO) == false) {
@@ -600,46 +599,35 @@ public class Matrix {
 					}
 				}
 			}
-			
-			//gaussian elimination
+
+			// gaussian elimination
 			for (int r = pivotRow + 1; r < rows; r++) {
-				if (elements[r][pivotColumn].equals(Fraction.ZERO)) continue;
-				
+				if (elements[r][pivotColumn].equals(Fraction.ZERO))
+					continue;
+
 				Fraction coefficient = elements[r][pivotColumn];
 				for (int i = 0; i < columns; i++) {
-					elements[r][i] = elements[r][i].subtract(elements[pivotRow][i].divide(pivot).multiply(coefficient)).simplify();
+					elements[r][i] = elements[r][i].subtract(elements[pivotRow][i].divide(pivot).multiply(coefficient))
+							.simplify();
 				}
-				for (int j = 0; j < rows; j++) {
-					for (int k = 0; k < columns; k++) {
-						System.out.print(j + "," + k + ": " + elements[j][k] + "    ");
-					}
-					System.out.println("\n");
-				}
-				System.out.println("\n");
 			}
 			pivotRow++;
 			pivotColumn++;
 		}
-		
-		//simplify
+
+		// simplify
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				elements[i][j] = elements[i][j].simplify();
 			}
 		}
 
-		//determinant = sum of elements on major diagonal
+		// determinant = sum of elements on major diagonal
 		Fraction determinant = Fraction.ONE;
 		for (int i = 0; i < rows; i++) {
 			determinant = determinant.multiply(elements[i][i]).simplify();
 		}
-		
-		for (int j = 0; j < rows; j++) {
-			for (int k = 0; k < columns; k++) {
-				System.out.print(j + "," + k + ": " + elements[j][k] + "    ");
-			}
-			System.out.println("\n");
-		}
+
 		determinant = determinant.multiply(sign).simplify();
 		return determinant;
 	}
