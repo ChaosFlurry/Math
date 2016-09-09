@@ -558,17 +558,107 @@ public class Matrix {
 		int pivotRow = 0;
 		int pivotColumn = 0;
 		
-		Matrix m1 = m;
+		Fraction[][] elements = m.getElements();
 		
 		// TODO matrix sizes 2 x 2 and 1 x 1 handled manually
+		// TODO fix issues with row swaps
 		
-		Fraction pivot;
-		for (int c = 0; c < columns; c++) {
+		//set pivot
+		for (int c = pivotColumn; c < columns; c++) {
+			Fraction[] column = new Fraction[columns - pivotColumn];
+			int count = 0;
+			for (int i = pivotRow; i < columns; i++) {
+				column[count] = elements[i][c];
+				count++;
+			}
+			
+			boolean allColumnValuesAreZero = true;
+			for (int i = 0; i < column.length; i++) {
+				if (column[i].equals(Fraction.ZERO) == false) {
+					allColumnValuesAreZero = false;
+					break;
+				}
+			}
+			
+			if (allColumnValuesAreZero) {
+				continue;
+			}
+			
+			//set pivot
+			Fraction pivot = elements[pivotRow][pivotColumn];
+			System.out.println(pivot);
+			
+			//swap rows
+			if (pivot.equals(Fraction.ZERO)) {
+				for (int i = pivotRow + 1; i < rows; i++) {
+					if (elements[i][pivotColumn].equals(Fraction.ZERO) == false) {
+						Fraction[] temp = elements[i];
+						elements[i] = elements[pivotRow];
+						elements[pivotRow] = temp;
+						sign *= -1;
+						break;
+					}
+				}
+			}
+			
+			//gaussian elimination
+			for (int r = pivotRow + 1; r < rows; r++) {
+				if (elements[r][pivotColumn].equals(Fraction.ZERO)) continue;
+				
+				Fraction coefficient = elements[r][pivotColumn];
+				for (int i = 0; i < columns; i++) {
+					elements[r][i] = elements[r][i].subtract(elements[pivotRow][i].divide(pivot).multiply(coefficient)).simplify();
+				}
+				for (int j = 0; j < rows; j++) {
+					for (int k = 0; k < columns; k++) {
+						System.out.print(j + "," + k + ": " + elements[j][k] + "    ");
+					}
+					System.out.println("\n");
+				}
+				System.out.println("\n");
+			}
+			pivotRow++;
+			pivotColumn++;
+		}
+		
+		//simplify
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				elements[i][j] = elements[i][j].simplify();
+			}
+		}
 
+		//determinant = sum of elements on major diagonal
+		Fraction determinant = Fraction.ONE;
+		for (int i = 0; i < rows; i++) {
+			determinant = determinant.multiply(elements[i][i]).simplify();
+		}
+		
+		for (int j = 0; j < rows; j++) {
+			for (int k = 0; k < columns; k++) {
+				System.out.print(j + "," + k + ": " + elements[j][k] + "    ");
+			}
+			System.out.println("\n");
+		}
+		determinant = determinant.multiply(sign).simplify();
+		return determinant;
+		
+		/*
+		Fraction pivot = Fraction.ZERO;
+		for (int c = pivotColumn; c < columns; c++) {
+			pivot = m1.get(pivotRow + 1, pivotColumn + 1);
 			for (int r = pivotRow; r < rows; r++) {
+				System.out.println("Matrix: ");
+				for (int j = 0; j < rows; j++) {
+					for (int k = 0; k < columns; k++) {
+						System.out.print(j + "," + k + ": " + m1.get(j + 1, k + 1) + "    ");
+					}
+					System.out.println("\n");
+				}
 				//check if pivot is 0
 				if (c == pivotColumn && r == pivotRow) {
-					pivot = m1.get(pivotRow + 1, pivotColumn + 1);
+					//*** commented pivot
+					//pivot = m1.get(pivotRow + 1, pivotColumn + 1);
 					Fraction[] currentColumn = m1.getColumn(r + 1);
 					//check if all elements of the current column are zero
 					boolean allColumnValuesAreZero = true;
@@ -590,6 +680,7 @@ public class Matrix {
 							if ((currentColumn[i].equals(Fraction.ZERO)) == false) {
 								m1.swapRow(pivotRow + 1, i + 1);
 								sign *= -1;
+								break;
 							}
 						}
 					}
@@ -600,6 +691,9 @@ public class Matrix {
 				
 				//reset pivot
 				pivot = m1.get(pivotRow + 1, pivotColumn + 1);
+				System.out.println("row: " + r);
+				System.out.println("column: " + c);
+				System.out.println("new pivot: " + pivot);
 				
 				//begin gaussian elimination
 				
@@ -624,6 +718,7 @@ public class Matrix {
 				for (int i = 0; i < subtracted.length; i++) {
 					subtracted[i] = subtracted[i].subtract(modified[i]).simplify();
 				}
+				//check this***
 				m1.setRow(r + 1, subtracted);
 			}
 			pivotRow++;
@@ -637,12 +732,7 @@ public class Matrix {
 			}
 			System.out.println("\n");
 		}
-		Fraction determinant = Fraction.ONE;
-		for (int i = 0; i < rows; i++) {
-			determinant = determinant.multiply(m1.get(i + 1, i + 1));
-		}
-		return determinant;
-		
+		*/
 		/*
 		
 		//columns:
