@@ -34,185 +34,16 @@ public class Main {
 	// TODO Unit Tests for simplify()
 	// TODO scientific notation?
 	public static void main(String[] args) {
-		Fraction f0 = new Fraction(10, 4);
-
-		// System.out.printf("The Decimal of f0 is: " + f0.decimalValue() +
-		// "\nThe Value of f0 is: " + f0.toSimplify());
-
-		/*
-		Fraction f1 = new Fraction(98, 4);
-		Fraction f2 = new Fraction(26, 2);
-		System.out.println("\n98/4 + 26/2 = " + MathUtil.simplify(MathOperation.add(f1, f2)).toString());
-		*/
+		Fraction[] a = {Fraction.valueOf(2), Fraction.valueOf(3), Fraction.valueOf(4), Fraction.valueOf(5)};
+		Fraction[] b = {Fraction.valueOf(1), Fraction.valueOf(2), Fraction.valueOf(3), Fraction.valueOf(8)};
+		Fraction[] c = {Fraction.valueOf(6), Fraction.valueOf(5), Fraction.valueOf(4), Fraction.valueOf(1)};
+		Fraction[] d = {Fraction.valueOf(1), Fraction.valueOf(3), Fraction.valueOf(2), Fraction.valueOf(3)};
 		
-		Fraction f1 = new Fraction(20, 2);
-		Fraction f2 = new Fraction(65, 3);
-		System.out.println("(20/2)/(65/3) = " + MathUtil.simplify(MathOperation.divide(f1, f2)).toString());
-			
+		Fraction[][] x = {a, b, c, d};
 		
-		Fraction f3 = new Fraction(2, 4);
-		System.out.println("2/4 --> " + f3);
-
-		Radical r = new Radical(2, 40, 2);
-		// System.out.println("Unsimplified: " + r.toString());
-		// System.out.println("Simplified: " + MathUtil.simplify(r).toString());
-
-		Double nan = Double.NaN;
-		int x = (int) Double.NaN;
-		System.out.println(nan);
-		System.out.println(x);
-		if (x == nan.intValue()) {
-			System.out.println("NAN");
-		} else {
-			System.out.println("Not NAN");
-		}
-		Fraction batchAddition = MathOperation.add();
-		System.out.println(batchAddition);
-
-		int root = MathUtil.nthRoot(-8, 3);
-		System.out.println(root);
-
-		Radical simplify = new Radical(2, -64, 3);
-		MathUtil.simplify(simplify);
-		
-		Radical rt2 = new Radical(1, -8, -3);
-		rt2 = MathUtil.simplify(rt2);
-		
-		System.out.println("String: " + rt2.toString());
-		System.out.println("coefficient: " + rt2.getCoefficient());
-		System.out.println("radicand: " + rt2.getRadicand());
-		System.out.println("index: " + rt2.getIndex());
-		System.out.println(rt2.decimalValue());
-		System.out.println(rt2.isUndefined());
-		System.out.println(rt2.isZero());
-		System.out.println(rt2.isANumber());
-		
-		String fractionParseTest = "2/-4";
-		try {
-			Fraction parseTest = Fraction.parseFraction(fractionParseTest);
-			System.out.println("parsed: " + parseTest.toString());
-		} catch (FractionFormatException e) {
-			System.out.println("Not a fraction.");
-		}
-		
-		System.out.println("---");
-		List<String> solutions;
-		List<Double> decimalSolutions;
-		PolySolver solver = new PolySolver(4, -40, 84);
-		solutions = solver.getStringSolutions();
-		decimalSolutions = solver.getDecimalSolutions();
-		for (String s : solutions) {
-			System.out.println(s);
-		}
-		for (Double d : decimalSolutions) {
-			System.out.println(d);
-		}
-		
-		Radical exTest1 = new Radical(1, 1, 1);
-		Radical exTest2 = new Radical(0, 2, 2);
-		try {
-			Radical exResult = RadicalOperation.multiply(exTest1, exTest2);
-			System.out.println(exResult);
-		} catch (UndefinedRadicalException e) {
-			System.out.println("Undefined");
-		} catch (RadicalOperationException e) {
-			System.out.println("cannot be multiplied");
-		}
-		System.out.println("---");
-		
-		PolySolver factorTest = new PolySolver(0, 0, 0);
-		try {
-			List<String> factored = factorTest.factor();
-			for (String step : factored) {
-				//System.out.println(step);
-			}
-		} catch (UnfactorableQuadraticException e) {
-			System.out.println(factorTest + " cannot be factored.");
-		}
-		System.out.println("---");
-		
-		String qParse = "2x^2+2x+1";
-		String qParse2 = "x^2+x+1";
-		String qParse3 = "x^2+1";
-		Quadratic parseTest;
-		try {
-			parseTest = Quadratic.parseQuadratic(qParse3);
-			System.out.println(parseTest);
-			System.out.println(parseTest.getA());
-			System.out.println(parseTest.getB());
-			System.out.println(parseTest.getC());
-		} catch (QuadraticFormatException e) {
-			e.printStackTrace();
-		}
-		System.out.println("---");
-		
-		Point px = new Point(1, 1);
-		Point py = new Point(2, 2);
-		LinearEquation xy = new LinearEquation(px, py);
-
-		System.out.println(xy.getSlope());
-		System.out.println(xy.getYIntercept());
-		System.out.println(xy.getXIntercept());
-		System.out.println(xy);
-		
-		TreeSet<Point> values = xy.tableOfValues(-0.001, 0.001, 0.0001);
-		System.out.println(xy.f(-98));
-		for (Point p : values) {
-			System.out.println(p);
-		}
-		
-		int[] array = new int[3];
-		int[] a = {1, 2, 3, 4};
-		array = a;
-		for (int i = 0; i < a.length; i++) {
-			System.out.println(a[i]);
-		}
-		
-		int[][] mArray = new int[2][3];
-		for (int i = 0; i < mArray.length; i++) {
-			for (int j = 0; j < mArray[i].length; j++) {
-				mArray[i][j] = (i + 1) * 10 + j + 1;
-				System.out.println("i:" + i + ", j:" + j + " " + Integer.toString(mArray[i][j]));
-			}
-		}
-		
-		int[][] mArray2 = new int[2][3];
-		for (int i = 0; i < mArray2.length; i++) {
-			for (int j = 0; j < mArray2[i].length; j++) {
-				mArray2[i][j] = (i + 1) * 20 + (j + 1) * 2;
-				System.out.println("i:" + i + ", j:" + j + " " + Integer.toString(mArray2[i][j]));
-			}
-		}
-		
-		Matrix m = new Matrix(2, 3, mArray);
-		System.out.println("rows: " + m.getNumberOfRows());
-		System.out.println("columns: " + m.getNumberOfColumns());
-		
-		Fraction[][] initial = m.getElements();
-		System.out.println("initial: " );
-		for (int i = 0; i < initial.length; i++) {
-			for (int j = 0; j < initial[i].length; j++) {
-				System.out.println("i:" + i + ", j:" + j + " " + initial[i][j]);
-			}
-		}
-		
-		m.setMatrixDimensions(5, 5);
-		m.setElements(mArray2);
-		
-		Fraction[][] returned = m.getElements();
-		System.out.println("rows: " + m.getNumberOfRows());
-		System.out.println("columns: " + m.getNumberOfColumns());
-		
-		System.out.println("returned: " );
-		for (int i = 0; i < returned.length; i++) {
-			for (int j = 0; j < returned[i].length; j++) {
-				System.out.println("i:" + i + ", j:" + j + " " + returned[i][j]);
-			}
-		}
-		
-		for (int i = 0; i < 3; i++) {
-			System.out.println(i);
-		}
+		Matrix m = new Matrix(4, 4, x);
+		Fraction det = m.determinant();
+		System.out.println(det);
 		
 		//TODO List:
 		//SYSTEMS***
@@ -281,9 +112,5 @@ public class Main {
 
 		// simplify Radical methods (just return a List of single Radical
 		// elements)
-
-		// removed MultiRadical, RadicalContianer, RadicalObject
-		// RadicalOperation changed from Interface to class (will be merged with
-		// MathOperations in the future)
 	}
 }
