@@ -3,6 +3,8 @@ package com.math.trigonometry;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.math.fraction.Fraction;
+
 public class Triangle {
 
 	public HashMap<String, Side> sides;
@@ -58,9 +60,39 @@ public class Triangle {
 					(0.5D * this.getSide("b").getLength() * this.getSide("c").getLength() * Math.sin(this.getSide("a").getAngle()));
 	}
 	
-	
-	
 	public Side getSide(String key) {
 		return sides.get(key);
+	}
+	
+	public Fraction getSinRatio(String angleTag) {
+		if(!rightAngle) return null;
+		
+		
+		Fraction ratio = null;
+		switch(angleTag) {
+		case "a":
+
+			break;
+		case "b":
+			
+			break;
+		case "c":
+			
+			break;
+		}
+		return ratio;
+	}
+	
+	public int getDoubleToInt(double n) {
+		String text = Double.toString(Math.abs(n));
+		int integerPlaces = text.indexOf('.');
+		int decimalplaces = text.length() - integerPlaces - 1;
+		
+		if(decimalplaces > 0) {
+			int base = 10;
+			n =	Math.pow(base, decimalplaces);
+		}
+		
+		return (int)n;
 	}
 }

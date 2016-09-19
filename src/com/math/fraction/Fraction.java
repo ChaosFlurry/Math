@@ -29,7 +29,7 @@ public class Fraction {
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}
-
+	
 	public static Fraction valueOf(int n) {
 		return new Fraction(n, 1);
 	}
