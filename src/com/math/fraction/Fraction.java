@@ -12,8 +12,8 @@ import com.math.helpers.MathUtil;
  *
  */
 public class Fraction {
-	int numerator;
-	int denominator;
+	private int numerator;
+	private int denominator;
 	
 	public static final Fraction ONE = new Fraction(1, 1);
 	public static final Fraction ZERO = new Fraction(0, 1);
@@ -494,7 +494,7 @@ public class Fraction {
 	 * 
 	 * @param f
 	 *            A fraction
-	 * @param power
+	 * @param n
 	 *            An integer
 	 * @return f ** n
 	 */

@@ -31,19 +31,20 @@ import com.math.radical.UndefinedRadicalException;
  */
 @SuppressWarnings("all")
 public class Main {
-	// TODO Unit Tests for simplify()
-	// TODO scientific notation?
 	public static void main(String[] args) {
+		
+		
+		/*
 		Fraction[] a = {Fraction.valueOf(2), Fraction.valueOf(3), Fraction.valueOf(4), Fraction.valueOf(5)};
 		Fraction[] b = {Fraction.valueOf(1), Fraction.valueOf(2), Fraction.valueOf(3), Fraction.valueOf(8)};
 		Fraction[] c = {Fraction.valueOf(6), Fraction.valueOf(5), Fraction.valueOf(4), Fraction.valueOf(1)};
 		Fraction[] d = {Fraction.valueOf(1), Fraction.valueOf(3), Fraction.valueOf(2), Fraction.valueOf(3)};
 		
 		Fraction[][] x = {a, b, c, d};
-		
 		Matrix m = new Matrix(4, 4, x);
 		Fraction det = m.determinant();
 		System.out.println(det);
+		*/
 		
 		//TODO List:
 		//SYSTEMS***

@@ -8,9 +8,9 @@ import com.math.helpers.MathUtil;
  * @author ChaosFlurry
  */
 public class Radical {
-	int coefficient;
-	int radicand;
-	int index;
+	private int coefficient;
+	private int radicand;
+	private int index;
 	
 	public Radical(int radicand, int index) {
 		this.coefficient = 1;
@@ -50,10 +50,8 @@ public class Radical {
 
 	/**
 	 * Simplifies a Radical.
-	 * 
-	 * @param r
-	 *            The Radical to be simplified
-	 * @return A Radical equivalent to r that cannot be further simplified
+	 *
+	 * @return A Radical that cannot be further simplified
 	 */
 	public Radical simplify() {
 		if (radicand == -1 && index % 2 != 0) {

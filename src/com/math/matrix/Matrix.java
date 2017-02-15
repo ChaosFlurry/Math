@@ -1,10 +1,8 @@
 package com.math.matrix;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.math.fraction.Fraction;
+
+import java.util.Arrays;
 
 public class Matrix {
 	// test
