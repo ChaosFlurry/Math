@@ -1,7 +1,8 @@
 package com.math.calculus;
 
+
 @SuppressWarnings("unused")
-public class Term {
+public class Term implements Comparable<Term>{
     private int coefficient;
     private int power;
 
@@ -47,5 +48,10 @@ public class Term {
                 return "" + coefficient + "x^" + power;
             }
         }
+    }
+    
+    @Override
+    public int compareTo(Term term) {
+        return Integer.valueOf(power).compareTo(term.power);
     }
 }
