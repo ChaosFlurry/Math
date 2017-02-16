@@ -2,6 +2,8 @@ package com.math.calculus;
 
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Function {
@@ -26,9 +28,44 @@ public class Function {
     public static ArrayList<Term> parseEquation(String equation) {
         // Evaluate inner brackets and expand
         
-        // Separate Terms using regex
         
-        // Add each Term into a List
+        // Separate Terms
+        ArrayList<String> unparsedTerms = new ArrayList<>();
+        int head = 0;
+        int tail;
+        for (int i = 0; i < equation.length(); i++) {
+            tail = i;
+            String currentIndex = Character.toString(equation.charAt(i));
+            if (currentIndex.equals("+") || currentIndex.equals("-")) {
+                unparsedTerms.add(equation.substring(head, tail));
+                head = tail;
+            }
+        }
+        
+        // Parse Terms by separating coefficient and power
+        ArrayList<Term> equationTerms = new ArrayList<>();
+        for (String s : unparsedTerms) {
+            int coefficient;
+            int power;
+            if (s.contains("x")) {
+                if (s.contains("^")) {
+                    coefficient = Integer.parseInt(s.substring(0, s.indexOf("x")));
+                    power = Integer.parseInt(s.substring(s.indexOf("^") + 1));
+
+                } else {
+                    coefficient = Integer.parseInt(s.substring(0, s.indexOf("x")));
+                    power = 1;
+                }
+            } else {
+                coefficient = Integer.parseInt(s);
+                power = 0;
+            }
+            Term parsedTerm = new Term(coefficient, power);
+            
+            // Add each parsed Term into a List
+            equationTerms.add(parsedTerm);
+        }
+        return equationTerms;
     }
     
     public static String resolveEquation(ArrayList<Term> terms) {
