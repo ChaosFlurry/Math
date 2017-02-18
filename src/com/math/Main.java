@@ -1,38 +1,34 @@
 package com.math;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.math.calculus.Derivative;
+import com.math.calculus.Function;
+import com.math.calculus.Term;
 
-import com.math.fraction.Fraction;
-import com.math.fraction.FractionFormatException;
-import com.math.helpers.MathOperation;
-import com.math.helpers.MathUtil;
-import com.math.matrix.Matrix;
-import com.math.polynomial.LinearEquation;
-import com.math.polynomial.Point;
-import com.math.polynomial.PolySolver;
-import com.math.polynomial.Quadratic;
-import com.math.polynomial.QuadraticFormatException;
-import com.math.polynomial.UnfactorableQuadraticException;
-import com.math.radical.Radical;
-import com.math.radical.RadicalOperation;
-import com.math.radical.RadicalOperationException;
-import com.math.radical.UndefinedRadicalException;
 
-/***
- * 
- * @author Archiving Do all temporary backend tests here. (This class is just
- *         for the devs to test)
- */
 @SuppressWarnings("all")
 public class Main {
 	public static void main(String[] args) {
+		Term t1 = new Term("-2x^5");
+		Term t2 = new Term("11x^4");
 		
+		Function f1 = new Function(t1, t2);
+		Function d1 = Derivative.derivative(f1);
+		System.out.println(d1);
+		
+        /*
+        TODO Features to implement
+        
+        */
+        
+        /*
+        TODO Bugs to fix
+        
+         */
+        
+        /*
+        TODO Refactoring and QoL fixes
+        
+         */
 		
 		/*
 		Fraction[] a = {Fraction.valueOf(2), Fraction.valueOf(3), Fraction.valueOf(4), Fraction.valueOf(5)};
@@ -46,7 +42,6 @@ public class Main {
 		System.out.println(det);
 		*/
 		
-		//TODO List:
 		//SYSTEMS***
 		//conversions?
 		//Triangle solver

@@ -1,7 +1,14 @@
 package com.math.calculus;
 
-/**
- * Created by John on 14/02/2017.
- */
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Integral {
+    public static Function integral(Function f) {
+        ArrayList<Term> integralTerms = new ArrayList<>();
+        
+        integralTerms = Function.groupLikeTerms(integralTerms);
+        Collections.sort(integralTerms);
+        return new Function(integralTerms);
+    }
 }

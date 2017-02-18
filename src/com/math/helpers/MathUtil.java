@@ -317,7 +317,7 @@ public class MathUtil {
 		// upon n being divisible, n = n / divisor
 		// repeat until n is prime
 
-		while (n != 1 && (isPrime(n) == false)) {
+		while (n != 1 && (!isPrime(n))) {
 			for (int p : primesUpToSqrtN) {
 				if (n % p == 0) {
 					primeFactors.add(p);
