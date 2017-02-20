@@ -92,8 +92,12 @@ public class Function {
         for (int i = 0; i < equation.length(); i++) {
             tail = i;
             String currentIndex = Character.toString(equation.charAt(i));
-            // TODO negative can be in power
             if (i != 0 && (currentIndex.equals("+") || currentIndex.equals("-"))) {
+                String previousIndex = Character.toString(equation.charAt(i - 1));
+                // Negative signs can appear after the power operator "^"
+                if (previousIndex.equals("^")) {
+                    continue;
+                }
                 unparsedTerms.add(equation.substring(head, tail));
                 head = tail;
             } else if (i == equation.length() - 1) {

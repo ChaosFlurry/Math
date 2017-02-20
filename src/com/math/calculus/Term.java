@@ -2,7 +2,7 @@ package com.math.calculus;
 
 
 @SuppressWarnings("unused")
-public class Term implements Comparable<Term>{
+public class Term implements Comparable<Term> {
     private int coefficient;
     private int power;
 

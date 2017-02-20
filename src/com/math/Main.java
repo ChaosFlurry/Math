@@ -9,11 +9,16 @@ import com.math.calculus.Term;
 public class Main {
 	public static void main(String[] args) {
 		Term t1 = new Term("-2x^5");
-		Term t2 = new Term("11x^4");
+		Term t2 = new Term("-11x^-24");
 		
 		Function f1 = new Function(t1, t2);
 		Function d1 = Derivative.derivative(f1);
-		System.out.println(d1);
+        System.out.println(d1);
+		Function f2 = new Function("-2x^-2-4x^3-x^7-9x^4");
+		System.out.println(f2);
+		Function d2 = Derivative.derivative(f2);
+		System.out.println(d2);
+
 		
         /*
         TODO Features to implement
