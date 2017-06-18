@@ -4,20 +4,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.math.helpers.MathUtil;
 
-/***
- * 
- * @author ChaosFlurry
- *
- */
 public class Fraction {
 	private int numerator;
 	private int denominator;
 	
-	public static final Fraction ONE = new Fraction(1, 1);
 	public static final Fraction ZERO = new Fraction(0, 1);
-
+	public static final Fraction ONE = new Fraction(1, 1);
+	
 	public Fraction(int numerator, int denominator) {
 		if (denominator == 0) {
 			throw new IllegalArgumentException("Denominator is 0");
@@ -55,10 +49,7 @@ public class Fraction {
 		int f2d = f2.simplify().getDenominator();
 		
 		//if numerators and denominators match
-		if (f1n == f2n && f1d == f2d) {
-			return true;
-		}
-		return false;
+		return f1n == f2n && f1d == f2d;
 	}
 
 	public Fraction simplify() {
@@ -77,7 +68,7 @@ public class Fraction {
 	public static Fraction simplify(Fraction f) {
 		int numerator = f.getNumerator();
 		int denominator = f.getDenominator();
-		int gcd = MathUtil.gcd(numerator, denominator);
+		int gcd = MathOperation.gcd(numerator, denominator);
 
 		numerator = (numerator / gcd);
 		denominator = (denominator / gcd);
@@ -91,7 +82,7 @@ public class Fraction {
 	public static Fraction parseFraction(String fraction) throws FractionFormatException {
 		fraction = fraction.trim();
 		Pattern numberPattern = Pattern.compile("^(-?\\d+)$");
-		Pattern fractionPattern = Pattern.compile("^(-?\\d+)\\/(-?\\d+)$");
+		Pattern fractionPattern = Pattern.compile("^(-?\\d+)/(-?\\d+)$");
 		Matcher numberMatcher = numberPattern.matcher(fraction);
 		Matcher fractionMatcher = fractionPattern.matcher(fraction);
 
@@ -121,10 +112,7 @@ public class Fraction {
 	}
 
 	public boolean isUndefined() {
-		if (denominator == 0)
-			return true;
-		else
-			return false;
+		return denominator == 0;
 	}
 
 	public double doubleValue() {
@@ -149,7 +137,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator + n * denominator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -171,13 +159,13 @@ public class Fraction {
 		int f1d = f1.getDenominator();
 		int f2n = f2.getNumerator();
 		int f2d = f2.getDenominator();
-		int gcd = MathUtil.gcd(f1d, f2d);
+		int gcd = MathOperation.gcd(f1d, f2d);
 
 		int numerator = f1n * (f2d / gcd) + f2n * (f1d / gcd);
 		int denominator = f1d * (f2d / gcd);
 
 		Fraction result = new Fraction(numerator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -229,7 +217,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator - n * denominator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -251,13 +239,13 @@ public class Fraction {
 		int f1d = f1.getDenominator();
 		int f2n = f2.getNumerator();
 		int f2d = f2.getDenominator();
-		int gcd = MathUtil.gcd(f1d, f2d);
+		int gcd = MathOperation.gcd(f1d, f2d);
 
 		int numerator = f1n * (f2d / gcd) - f2n * (f1d / gcd);
 		int denominator = f1d * (f2d / gcd);
 
 		Fraction result = new Fraction(numerator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -309,7 +297,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator * n, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -336,7 +324,7 @@ public class Fraction {
 		int denominator = f1d * f2d;
 
 		Fraction result = new Fraction(numerator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -400,7 +388,7 @@ public class Fraction {
 		int denominator = f.getDenominator();
 
 		Fraction result = new Fraction(numerator, denominator * n);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -431,7 +419,7 @@ public class Fraction {
 		}
 
 		Fraction result = new Fraction(numerator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 
@@ -503,7 +491,7 @@ public class Fraction {
 		int denominator = (int) Math.pow(f.getDenominator(), n);
 
 		Fraction result = new Fraction(numerator, denominator);
-		Fraction.simplify(result);
+		result = Fraction.simplify(result);
 		return result;
 	}
 	
